@@ -9,11 +9,11 @@ class ElectronicAnimal
 
   def animals_types
     case @name_animal
-      when "dog".downcase
+    when "dog"
       puts "гав гав"
-    when "cat".downcase
+    when "cat"
       puts "м'яу м'яу"
-    when "parrot".downcase
+    when "parrot"
       puts "чик чирик"                               
     end
   end
@@ -167,22 +167,22 @@ class Pet < ElectronicAnimal
       pl_count += rand(1..6)
       puts "#{@name} випало #{pl_count}"
       puts 'ваша черга кидати натисни кнопку (y)'
-      ran_b = STDIN.gets.chomp.to_s
-      if ran_b == "y".downcase
+      ran_b = STDIN.gets.chomp.to_s.downcase
+      if ran_b == "y"
         p2_count += rand(1..6)
         puts "випало #{p2_count}"
-          if pl_count >= 20
-            puts "#{p2_count}"
-            puts "---#{@name} виграв---"
-            @smart += 3
-            @mood = 10
-            break
-          elsif p2_count >= 20
-            puts "#{p2_count}"
-            puts "---ви виграли---"
-            @mood -= 3
-            break
-          end
+        if pl_count >= 20
+          puts "#{p2_count}"
+          puts "---#{@name} виграв---"
+          @smart += 3
+          @mood = 10
+          break
+        elsif p2_count >= 20
+          puts "#{p2_count}"
+          puts "---ви виграли---"
+          @mood -= 3
+          break
+        end
       end
       passage_of_time
     end
@@ -233,7 +233,7 @@ def menu
     puts '<<дайте ім\'я тамагочі:>>'
     name_t = STDIN.gets.chomp.to_s
     puts '<<оберіть тварину із ["dog","cat","parrot"]>>'
-    el_animal = STDIN.gets.chomp.to_s
+    el_animal = STDIN.gets.chomp.to_s.downcase
     if el_animal == "dog" || el_animal ==  "cat" || el_animal == "parrot"
       puts "ви обрали #{el_animal}"
     else
@@ -325,12 +325,12 @@ def menu
             next
           when 11
             puts 'натисніть y / n для виходу:'
-            ex_t = STDIN.gets.chomp.to_s
-            if ex_t.to_s == "yes".upcase || "y".upcase
+            ex_t = STDIN.gets.chomp.to_s.downcase
+            if ex_t.to_s == "yes" || "y"
               puts 'вимкнули тамагочі.'
               menu_exit = false
               break
-            elsif ex_t.to_s == "no".upcase || "n".upcase
+            elsif ex_t.to_s == "no" || "n"
               next
             else
               puts 'ведена невірна команда.'
