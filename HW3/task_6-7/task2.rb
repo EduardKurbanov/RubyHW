@@ -424,7 +424,7 @@ def menu
           end
         when 12
           puts 'створюеться html file'
-          CreatesHtmlFileTest.creates_html_file_test(tam.vital_statistics_test, bypass_html: true)
+          CreatesHtmlFileTest.creates_html_file_test(tam.vital_statistics, bypass_html: true)
           puts 'створився html file'
         else
           puts 'ввели невірну команду'
@@ -434,7 +434,7 @@ def menu
         var = nil
       end
       tam.random_intelligence
-      CreatesHtmlFileTest.creates_html_file_test(tam.vital_statistics_test, bypass_html: true)
+      CreatesHtmlFileTest.creates_html_file_test(tam.vital_statistics, bypass_html: true)
     end
   end
 end
