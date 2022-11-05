@@ -411,12 +411,14 @@ def menu
           next
         when 11
           puts 'натисніть y / n для виходу:'
+
           ex_t = STDIN.gets.chomp.to_s.downcase
-          if ex_t.to_s == 'yes' || 'y'
+
+          if ex_t.to_s == 'yes' || ex_t.to_s == 'y'
             puts 'вимкнули тамагочі.'
             menu_exit = false
             break
-          elsif ex_t.to_s == 'no' || 'n'
+          elsif ex_t.to_s == 'no' || ex_t.to_s == 'n'
             next
           else
             puts 'ведена невірна команда.'
