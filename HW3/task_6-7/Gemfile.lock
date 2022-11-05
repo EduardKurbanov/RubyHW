@@ -1,0 +1,21 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    crass (1.0.6)
+    creates_html_file_test (0.0.3)
+    nokogiri (1.13.9-x86_64-linux)
+      racc (~> 1.4)
+    racc (1.6.0)
+    sanitize (6.0.0)
+      crass (~> 1.0.2)
+      nokogiri (>= 1.12.0)
+
+PLATFORMS
+  x86_64-linux
+
+DEPENDENCIES
+  creates_html_file_test (>= 0.0.3)
+  sanitize (>= 6.0.0)
+
+BUNDLED WITH
+   2.3.25
