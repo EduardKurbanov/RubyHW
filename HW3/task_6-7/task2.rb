@@ -36,7 +36,7 @@ class Pet < ElectronicAnimal
 #-----------------------
   def stroll
     puts "ви гуляєте з #{@name}"
-    puts "він дуже веселий"        
+    puts 'він дуже веселий'        
     @mood = 10
     @hunger +=3
     @smart +=3
@@ -50,39 +50,32 @@ class Pet < ElectronicAnimal
     puts 'zzz-z-zzzzz--z-zz'
     @toilet +=1
     @hunger +=1
-
     if @sleep_t >= 10
       @sleep_t = 0
     end
-
     if @hunger >= 9
       puts 'Прокинувся бо хоче їсти'
       puts '1 - нагодувати'
       puts '2 - відстань, іди спати'
-
-      arg_t = STDIN.gets.chomp.to_i
-
-      if arg_t == 1
+      selection_command = STDIN.gets.chomp.to_i
+      if selection_command == 1
         feed
-      elsif arg_t == 2
+      elsif selection_command == 2
         @mood -= 2
         puts 'Образився і пішов спати'
       end
-    end
-    
+    end 
     if @toilet >= 5
       puts 'прокинувся бо хоче в туале і боїця темряви'
       puts 'кличе вас !!! '
       puts '1 - ви допоможете.'
       puts '2 - ви не допоможете'
-      
-      arg_t = STDIN.gets.chomp.to_i
-
-      if arg_t == 1
+      selection_command = STDIN.gets.chomp.to_i
+      if selection_command == 1
         puts 'ведемо до туалету'
         go_to_the_toilet
         puts 'лягае далі спати'
-      elsif arg_t == 2
+      elsif selection_command == 2
         puts 'іди сам'
         puts 'я боюся темряви'
         puts 'ой мени вже непотрибно '
@@ -141,10 +134,10 @@ class Pet < ElectronicAnimal
 
   def call_the_owner
     puts "#{name} кличе вас"
-    a_1 = 'я хочу їсти'
-    a_2 = 'я хочу в туалет'
-    a_3 = 'я хочу гулять'
-    random_s = [a_1, a_2, a_3].sample
+    food_argument = 'я хочу їсти'
+    toilette_argument = 'я хочу в туалет'
+    argument_walk = 'я хочу гулять'
+    random_s = [food_argument, toilette_argument, argument_walk].sample
     puts random_s
     if random_s.to_s == 'я хочу їсти'
       feed
@@ -166,27 +159,25 @@ class Pet < ElectronicAnimal
 
   def play_with_the_owner
     puts "ви граєте з #{@name} в Гральні кісточки до 20"
-    pl_count = 0
-    p2_count = 0
+    user_points_1 = 0
+    user_points_2 = 0
     while true
       puts "#{@name} кидає гральні кистки"
-      pl_count += rand(1..6)
-      puts "#{@name} випало #{pl_count}"
+      user_points_1 += rand(1..6)
+      puts "#{@name} випало #{user_points_1}"
       puts 'ваша черга кидати натисни кнопку (y)'
-
       ran_b = STDIN.gets.chomp.to_s.downcase
-
       if ran_b == "y"
-        p2_count += rand(1..6)
-        puts "випало #{p2_count}"
-        if pl_count >= 20
-          puts "#{p2_count}"
+        user_points_2 += rand(1..6)
+        puts "випало #{user_points_2}"
+        if user_points_1 >= 20
+          puts "#{user_points_1}"
           puts "---#{@name} виграв---"
           @smart += 3
           @mood = 10
           break
-        elsif p2_count >= 20
-          puts "#{p2_count}"
+        elsif user_points_2 >= 20
+          puts "#{user_points_2}"
           puts "---ви виграли---"
           @mood -= 3
           break
@@ -203,7 +194,6 @@ class Pet < ElectronicAnimal
     if @sleep_t > 10
       puts 'Я хочу спати'
     end
-
     if @hunger >= 5 &&  @hunger <= 6
       puts 'урчит в животі'
     elsif @hunger >= 7 && @hunger <= 9
@@ -213,7 +203,6 @@ class Pet < ElectronicAnimal
     elsif @hunger >= 10
       abort "#{@name} помер від голоду"
     end
-
     if @life < 1
       abort 'Помер від поганого життя'
     elsif @life <= 7
@@ -223,13 +212,13 @@ class Pet < ElectronicAnimal
     end    
   end
 
-  def valid_p(arg_p)
-    if arg_p >= 10
+  def valid_p(pet_points)
+    if pet_points >= 10
       return 9
-    elsif arg_p <= 0
+    elsif pet_points <= 0
       return 0
     else
-      arg_p
+      pet_points
     end
   end
 
@@ -238,9 +227,9 @@ class Pet < ElectronicAnimal
   def random_intelligence
     puts "*" * 50
     puts "#{@name} займаеться своїми справами"
-    arg_r = nil
+    arg_random = nil
     arr = [method(:game), method(:listen_to_music), method(:call_the_owner),method(:study)].sample
-    arg_r = arr.call
+    arg_random = arr.call
     puts "*" * 50
   end
 
@@ -299,7 +288,6 @@ class Pet < ElectronicAnimal
               ]
     end
   end
-
 end
 
 
@@ -308,44 +296,38 @@ def menu
   while menu_exit
     puts '<<вас вітає тамгочі>>'
     puts '<<дайте ім\'я тамагочі:>>'
-    name_t = STDIN.gets.chomp.to_s
+    name_t = STDIN.gets.chomp.to_s.downcase.capitalize
     puts '<<оберіть тварину із ["dog","cat","parrot"]>>'
-
     el_animal = STDIN.gets.chomp.to_s.downcase
-
     if el_animal == 'dog' || el_animal ==  'cat' || el_animal == 'parrot'
       puts "ви обрали #{el_animal}"
     else
       puts 'введена невірна тварина'
       next
     end
-
-    tam = Pet.new(name_t, el_animal)
-
-    puts '
-      0 - життеві показники
-      1 - тамагочі гуляє
-      2 - тамагочі іде спати
-      3 - тамагочі грає
-      4 - тамагочі вчиться
-      5 - прибираєте в кімнаті
-      6 - тамагочі іде в туалет
-      7 - тамагочі слухае музику
-      8 - тамагочі кличе вас
-      9 - нагодувати тамагочі
-      10 - грати з тамагочі в Гральні кісточки
-      11 - вимкнути тамагочі (y / n)
-      12 - зберегти показники тамагочи в html'
-    
+    tam = Pet.new(name_t, el_animal)   
     while true
       begin
-        x = 20  #секунди до приняття рішення, а потім тамогочі буде вирішувати сам.
+        time_sec = 20  #секунди до приняття рішення, а потім тамогочі буде вирішувати сам.   
+        puts '
+        0 - життеві показники
+        1 - тамагочі гуляє
+        2 - тамагочі іде спати
+        3 - тамагочі грає
+        4 - тамагочі вчиться
+        5 - прибираєте в кімнаті
+        6 - тамагочі іде в туалет
+        7 - тамагочі слухае музику
+        8 - тамагочі кличе вас
+        9 - нагодувати тамагочі
+        10 - грати з тамагочі в Гральні кісточки
+        11 - вимкнути тамагочі (y / n)
+        12 - зберегти показники тамагочи в html'
         puts 'оберіть варіант: '
-
-        var = Timeout::timeout(x) {
-          STDIN.gets.chomp
+        var = Timeout::timeout(time_sec) {
+          STDIN.gets.chomp.to_i
         }
-
+        CreatesHtmlFileTest.creates_html_file_test(tam.vital_statistics, bypass_html: true)
         case var.to_i
         when 0 
           puts "name #{tam.name}"
@@ -411,9 +393,7 @@ def menu
           next
         when 11
           puts 'натисніть y / n для виходу:'
-
           ex_t = STDIN.gets.chomp.to_s.downcase
-
           if ex_t.to_s == 'yes' || ex_t.to_s == 'y'
             puts 'вимкнули тамагочі.'
             menu_exit = false
