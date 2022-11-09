@@ -3,19 +3,16 @@ require "creates_html_file_test"
 
 
 class ElectronicAnimal
-  def initialize(name_animal)
-    @name_animal = name_animal
-    animals_types
-  end
-
-  def animals_types
-    case @name_animal
-    when "dog"
-      puts "гав гав"
-    when "cat"
-      puts "м'яу м'яу"
-    when "parrot"
-      puts "чик чирик"                               
+  def animals_types(animal_choice)
+    case animal_choice
+    when 'dog'
+      puts 'гав гав'
+    when 'cat'
+      puts 'м\'яу м\'яу'
+    when 'parrot'
+      puts 'чик чирик'
+    else
+      puts'невірний вибір'                               
     end
   end
 end
@@ -24,7 +21,7 @@ end
 class Pet < ElectronicAnimal
   attr_reader :name, :life, :mood, :sleep_t, :hunger, :toilet, :smart ,:name_animal
   def initialize(name, name_animal)
-    super(name_animal)
+    animals_types(name_animal)
     @name = name
     @life = 10
     @mood = 10
@@ -50,37 +47,49 @@ class Pet < ElectronicAnimal
     puts 'zzz-z-zzzzz--z-zz'
     @toilet +=1
     @hunger +=1
-    if @sleep_t >= 10
-      @sleep_t = 0
-    end
+    @sleep_t = 0 if @sleep_t >= 10
     if @hunger >= 9
-      puts 'Прокинувся бо хоче їсти'
-      puts '1 - нагодувати'
-      puts '2 - відстань, іди спати'
-      selection_command = STDIN.gets.chomp.to_i
-      if selection_command == 1
-        feed
-      elsif selection_command == 2
-        @mood -= 2
-        puts 'Образився і пішов спати'
+      choice_hunger = true
+      while choice_hunger
+        puts 'Прокинувся бо хоче їсти'
+        puts '1 - нагодувати'
+        puts '2 - відстань, іди спати'
+        selection_command = STDIN.gets.chomp.to_i
+        if selection_command == 1
+          feed
+          choice_hunger = false
+        elsif selection_command == 2
+          @mood -= 2
+          puts 'Образився і пішов спати'
+          choice_hunger = false
+        else
+          next
+        end
       end
     end 
     if @toilet >= 5
-      puts 'прокинувся бо хоче в туале і боїця темряви'
-      puts 'кличе вас !!! '
-      puts '1 - ви допоможете.'
-      puts '2 - ви не допоможете'
-      selection_command = STDIN.gets.chomp.to_i
-      if selection_command == 1
-        puts 'ведемо до туалету'
-        go_to_the_toilet
-        puts 'лягае далі спати'
-      elsif selection_command == 2
-        puts 'іди сам'
-        puts 'я боюся темряви'
-        puts 'ой мени вже непотрибно '
-        puts 'НУ КАПЕЦЬ ЯК ТАК ТО'
-        cleaning
+      choice_toilet = true
+      while choice_toilet
+        puts 'прокинувся бо хоче в туале і боїця темряви'
+        puts 'кличе вас !!! '
+        puts '1 - ви допоможете.'
+        puts '2 - ви не допоможете'
+        selection_command = STDIN.gets.chomp.to_i
+        if selection_command == 1
+          puts 'ведемо до туалету'
+          go_to_the_toilet
+          puts 'лягае далі спати'
+          choice_toilet = false
+        elsif selection_command == 2
+          puts 'іди сам'
+          puts 'я боюся темряви'
+          puts 'ой мени вже непотрибно '
+          puts 'НУ КАПЕЦЬ ЯК ТАК ТО'
+          cleaning
+          choice_toilet = false
+        else
+          next
+        end
       end
     end    
     passage_of_time
@@ -115,9 +124,7 @@ class Pet < ElectronicAnimal
 
   def go_to_the_toilet
     puts 'сходити до туалету'
-    if @toilet >= 5 
-      @toilet = 0
-    end
+    @toilet = 0 if @toilet >= 5 
     passage_of_time    
   end
 
@@ -161,30 +168,36 @@ class Pet < ElectronicAnimal
     puts "ви граєте з #{@name} в Гральні кісточки до 20"
     user_points_1 = 0
     user_points_2 = 0
-    while true
+    stop_game = true
+    while stop_game
       puts "#{@name} кидає гральні кистки"
       user_points_1 += rand(1..6)
       puts "#{@name} випало #{user_points_1}"
-      puts 'ваша черга кидати натисни кнопку (y)'
-      ran_b = STDIN.gets.chomp.to_s.downcase
-      if ran_b == "y"
-        user_points_2 += rand(1..6)
-        puts "випало #{user_points_2}"
-        if user_points_1 >= 20
-          puts "#{user_points_1}"
-          puts "---#{@name} виграв---"
-          @smart += 3
-          @mood = 10
+      while true
+        puts 'ваша черга кидати натисни кнопку (y)'
+        random_bone = STDIN.gets.chomp.to_s.downcase
+        if random_bone == "y"
+          user_points_2 += rand(1..6)
+          puts "випало #{user_points_2}"
+          if user_points_1 >= 20
+            puts "#{user_points_1}"
+            puts "---#{@name} виграв---"
+            @smart += 3
+            @mood = 10
+            stop_game = false
+          elsif user_points_2 >= 20
+            puts "#{user_points_2}"
+            puts "---ви виграли---"
+            @mood -= 3
+            stop_game = false
+          end
           break
-        elsif user_points_2 >= 20
-          puts "#{user_points_2}"
-          puts "---ви виграли---"
-          @mood -= 3
-          break
+        else
+          next
         end
-      end
-      passage_of_time
+      end      
     end
+    passage_of_time
   end
 #-------------------------
   private
@@ -194,7 +207,7 @@ class Pet < ElectronicAnimal
     if @sleep_t > 10
       puts 'Я хочу спати'
     end
-    if @hunger >= 5 &&  @hunger <= 6
+    if @hunger >= 5 &&  @hunger <= 7
       puts 'урчит в животі'
     elsif @hunger >= 7 && @hunger <= 9
       puts "я хочу їсти"
