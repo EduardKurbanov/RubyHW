@@ -1,0 +1,28 @@
+<html>
+  <%= render('head.html.erb') %>
+  <body>
+    <h1>Привіт, мене звати <%= pet_interaction.name %>!</h1>
+    <%= render('pet_char.html.erb') %>
+    <form action="/study">
+      <button type="submit" class="btn btn-primary">Study <%= pet_interaction.name %></button>
+    </form>
+    <form action="/sleep">
+      <button type="submit" class="btn btn-primary">Slip <%= pet_interaction.name %></button>
+    </form>
+    <form action="/walk">
+      <button type="submit" class="btn btn-primary">Take a walk <%= pet_interaction.name %></button>
+    </form>
+    <form action="/clean">
+      <button type="submit" class="btn btn-primary">Clean <%= pet_interaction.name %></button>
+    </form>
+    <form action="/toilet">
+      <button type="submit" class="btn btn-primary">Bring <%= pet_interaction.name %> to the toilet</button>
+    </form>
+    <form action="/feed">
+      <button type="submit" class="btn btn-primary">Feed <%= pet_interaction.name %></button>
+    </form>
+    <form action="/exit">
+      <button type="submit" class="btn btn-primary">exit</button>
+    </form>
+  </body>
+</html>

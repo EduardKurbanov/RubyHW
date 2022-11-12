@@ -1,0 +1,11 @@
+<html>
+  <%= render('head.html.erb') %>
+  <body>
+    <% if pet_interaction.nil? %>
+      <form method="post" action="/create_pet">
+        <input name="name" type="text">
+        <button type="submit" class="btn btn-primary">Enter pet name</button>
+      </form>
+    <% end %>
+  </body>
+</html>
