@@ -32,7 +32,7 @@ class Pet < ElectronicAnimal
   end
 #-----------------------
   def stroll
-    puts "ви гуляєте з #{@name}"
+    puts "ви гуляєте з #{name}"
     puts 'він дуже веселий'        
     @mood = 10
     @hunger +=3
@@ -43,7 +43,7 @@ class Pet < ElectronicAnimal
   end
 
   def dream
-    puts "#{@name} іде спати"
+    puts "#{name} іде спати"
     puts 'zzz-z-zzzzz--z-zz'
     @toilet +=1
     @hunger +=1
@@ -96,7 +96,7 @@ class Pet < ElectronicAnimal
   end
 
   def game
-    puts "#{@name} граєця з м'ячем"
+    puts "#{name} граєця з м'ячем"
     puts 'ганяє по полю'
     @life = 10
     @mood = 10
@@ -141,23 +141,20 @@ class Pet < ElectronicAnimal
 
   def call_the_owner
     puts "#{name} кличе вас"
-    food_argument = 'я хочу їсти'
-    toilette_argument = 'я хочу в туалет'
-    argument_walk = 'я хочу гулять'
-    random_s = [food_argument, toilette_argument, argument_walk].sample
+    random_s = ['я хочу їсти', 'я хочу в туалет', 'я хочу гулять'].sample
     puts random_s
-    if random_s.to_s == 'я хочу їсти'
+    if random_s == 'я хочу їсти'
       feed
-    elsif random_s.to_s == 'я хочу в туалет'
+    elsif random_s == 'я хочу в туалет'
       go_to_the_toilet
-    elsif random_s.to_s == 'я хочу гуляти'
+    elsif random_s == 'я хочу гуляти'
       stroll
     end
     passage_of_time
   end
 
   def feed
-    puts "ви гудуєте #{@name}"
+    puts "ви гудуєте #{name}"
     puts 'їсть смаколики'
     @hunger = 0
     @toilet += 3
@@ -165,7 +162,7 @@ class Pet < ElectronicAnimal
   end
 
   def play_with_the_owner
-    puts "ви граєте з #{@name} в Гральні кісточки до 20"
+    puts "ви граєте з #{name} в Гральні кісточки до 20"
     user_points_1 = 0
     user_points_2 = 0
     stop_game = true
@@ -199,51 +196,18 @@ class Pet < ElectronicAnimal
     end
     passage_of_time
   end
-#-------------------------
-  private
 
-  def passage_of_time
-    sleep(3)
-    if @sleep_t > 10
-      puts 'Я хочу спати'
-    end
-    if @hunger >= 5 &&  @hunger <= 7
-      puts 'урчит в животі'
-    elsif @hunger >= 7 && @hunger <= 9
-      puts "я хочу їсти"
-    elsif @hunger == 10
-      puts 'я дуже хочу їсти'
-    elsif @hunger >= 10
-      abort "#{@name} помер від голоду"
-    end
-    if @life < 1
-      abort 'Помер від поганого життя'
-    elsif @life <= 7
-      puts 'мені погано'
-    elsif @life <= 5
-      puts 'захворів'
-    end    
+  def reseler(arg_1 = "*", arg_2 = 50)
+    puts arg_1 * arg_2
   end
-
-  def valid_p(pet_points)
-    if pet_points >= 10
-      return 9
-    elsif pet_points <= 0
-      return 0
-    else
-      pet_points
-    end
-  end
-
-  public
 
   def random_intelligence
-    puts "*" * 50
-    puts "#{@name} займаеться своїми справами"
+    reseler
+    puts "#{name} займаеться своїми справами"
     arg_random = nil
     arr = [method(:game), method(:listen_to_music), method(:call_the_owner),method(:study)].sample
     arg_random = arr.call
-    puts "*" * 50
+    reseler
   end
 
   def vital_statistics
@@ -301,6 +265,41 @@ class Pet < ElectronicAnimal
               ]
     end
   end
+#-------------------------
+  private
+
+  def passage_of_time
+    sleep(3)
+    if @sleep_t > 10
+      puts 'Я хочу спати'
+    end
+    if @hunger >= 5 &&  @hunger <= 7
+      puts 'урчит в животі'
+    elsif @hunger >= 7 && @hunger <= 9
+      puts "я хочу їсти"
+    elsif @hunger == 10
+      puts 'я дуже хочу їсти'
+    elsif @hunger >= 10
+      abort "#{@name} помер від голоду"
+    end
+    if @life < 1
+      abort 'Помер від поганого життя'
+    elsif @life <= 7
+      puts 'мені погано'
+    elsif @life <= 5
+      puts 'захворів'
+    end    
+  end
+
+  def valid_p(pet_points)
+    if pet_points >= 10
+      return 9
+    elsif pet_points <= 0
+      return 0
+    else
+      pet_points
+    end
+  end
 end
 
 
@@ -312,7 +311,8 @@ def menu
     name_t = STDIN.gets.chomp.to_s.downcase.capitalize
     puts '<<оберіть тварину із ["dog","cat","parrot"]>>'
     el_animal = STDIN.gets.chomp.to_s.downcase
-    if el_animal == 'dog' || el_animal ==  'cat' || el_animal == 'parrot'
+    animal_choice_arg = ['dog', 'cat', 'parrot']
+    if animal_choice_arg.include?(el_animal)
       puts "ви обрали #{el_animal}"
     else
       puts 'введена невірна тварина'
@@ -353,13 +353,13 @@ def menu
         when 1
           tam.stroll
           puts "#{tam.name} вже награвся"
-          puts '*' * 50
+          tam.reseler
           next
         when 2
           if tam.sleep_t != 0
             tam.dream
             puts "#{tam.name} вже прокинувся"
-            puts '*' * 50 
+            tam.reseler 
           else
             puts 'Я не хочу спати'
           end
@@ -367,42 +367,42 @@ def menu
         when 3
           tam.game
           puts "#{tam.name} вже награвся"
-          puts '*' * 50 
+          tam.reseler 
           next
         when 4
           tam.study
           puts "#{tam.name} вже зробив уроки"
-          puts '*' * 50 
+          tam.reseler 
           next
         when 5
           tam.cleaning
           puts "#{tam.name} вже прибрано у кімнаті"
-          puts '*' * 50 
+          tam.reseler 
           next
         when 6
           tam.go_to_the_toilet
           puts "#{tam.name} вже сходив до туалет"
-          puts '*' * 50 
+          tam.reseler 
           next
         when 7
           tam.listen_to_music
           puts "#{tam.name} вже послухав музику"
-          puts '*' * 50 
+          tam.reseler 
           next
         when 8
           tam.call_the_owner
           puts "#{tam.name} дуже веселий"
-          puts '*' * 50 
+          tam.reseler 
           next
         when 9
           tam.feed
           puts "#{tam.name} вже наївся"
-          puts '*' * 50 
+          tam.reseler 
           next
         when 10
           tam.play_with_the_owner
           puts "#{tam.name} дуже радий що ми пограли разом"
-          puts '*' * 50 
+          tam.reseler 
           next
         when 11
           puts 'натисніть y / n для виходу:'
