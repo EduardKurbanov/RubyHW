@@ -19,6 +19,8 @@ end
 
 
 class Pet < ElectronicAnimal
+  RANDOM_S = ['я хочу їсти', 'я хочу в туалет', 'я хочу гулять']
+  ANIMAL_CHOICE_ARG = ['dog', 'cat', 'parrot']
   attr_reader :name, :life, :mood, :sleep_t, :hunger, :toilet, :smart ,:name_animal
   def initialize(name, name_animal)
     animals_types(name_animal)
@@ -141,7 +143,7 @@ class Pet < ElectronicAnimal
 
   def call_the_owner
     puts "#{name} кличе вас"
-    random_s = ['я хочу їсти', 'я хочу в туалет', 'я хочу гулять'].sample
+    random_s = RANDOM_S.sample
     puts random_s
     if random_s == 'я хочу їсти'
       feed
@@ -309,9 +311,9 @@ def menu
     puts '<<вас вітає тамгочі>>'
     puts '<<дайте ім\'я тамагочі:>>'
     name_t = STDIN.gets.chomp.to_s.downcase.capitalize
-    puts '<<оберіть тварину із ["dog","cat","parrot"]>>'
+    puts "<<оберіть тварину із #{Pet::ANIMAL_CHOICE_ARG}>>"
     el_animal = STDIN.gets.chomp.to_s.downcase
-    animal_choice_arg = ['dog', 'cat', 'parrot']
+    animal_choice_arg = Pet::ANIMAL_CHOICE_ARG
     if animal_choice_arg.include?(el_animal)
       puts "ви обрали #{el_animal}"
     else
