@@ -1,16 +1,17 @@
 class Api::V1::ArticlesController < ApplicationController
+  before_action :set_aticle, only: %i[show update destroy]
+
   def index
     @articles = Article.all
     render json: @articles, status: :ok
   end
 
   def show
-    @article = Article.find_by(id: set_article)
-    render json: @article
+    render json: @article, status: :ok
   end
 
   def create
-    @article = Article.new(title: article_params[:title], body: article_params[:title])
+    @article = Article.new(article_params)
     if @article.save
       render json: @article, status: :created
     else
@@ -19,20 +20,18 @@ class Api::V1::ArticlesController < ApplicationController
   end
 
   def update
-    @article = Article.find_by(id: set_article)
-    if @article.update(title: article_params[:title], body: article_params[:title])
-      render json: @article
+    if @article.update(article_params)
+      render json: @article, status: :ok
     else
       render json: @article.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @article = Article.find_by(id: set_article)
     if @article.destroy
-      head(:ok)
+      render json: @article, status: :no_content
     else
-      head(:destory)
+      render json: @article, status: :unprocessible_entity
     end
   end
 
