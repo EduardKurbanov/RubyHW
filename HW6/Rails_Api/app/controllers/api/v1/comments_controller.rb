@@ -4,7 +4,7 @@ class Api::V1::CommentsController < ApplicationController
   def index
 #    @article = Article.find(params[:article_id])
 #    @comments = @article.comment.all
-    @comments = Comment.where(status: params[:status] || :unpublished)
+    @comments = Comment.where(status: params[:status] || :published)
     render json: @comments, status: :ok
   end
   
