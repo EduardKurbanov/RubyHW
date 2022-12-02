@@ -9,22 +9,22 @@ Article.create([
     {
       title: 'First article',
       body: 'Some text for article',
-      author_id: 1,
+      author_id: 1
     },
     {
       title: 'Second one',
       body: 'Some more text for article',
-      author_id: 2,
+      author_id: 2
     },
     {
       title: 'One more article',
       body: 'Again, another text for article',
-      author_id: 3,
+      author_id: 3
     },
     {
       title: 'Fourths article',
       body: 'Well, this is also text for article',
-      author_id: 1,
+      author_id: 1
     }
   ])
 
