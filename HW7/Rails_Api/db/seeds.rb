@@ -63,8 +63,8 @@ Author.create([
      name: 'JECK'
    },
    {
-    name: 'EDDIE'
-  },
+     name: 'EDDIE'
+   }
  ])
 
 Comment.create([
