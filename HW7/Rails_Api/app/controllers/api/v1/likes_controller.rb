@@ -5,10 +5,12 @@ class Api::V1::LikesController < ApplicationController
     if params[:article_id]
       @article = Article.find(params[:article_id])
       @article_like = @article.likes.create(like_params)
+      @article_like.save
       render json: {new_like: @article_like}, status: :ok
     else
       @comment = Comment.find(params[:comment_id])
       @comment_like = @comment.likes.create(like_params)
+      @comment_like.save
       render json: {new_like: @comment_like}, status: :ok
     end
   end

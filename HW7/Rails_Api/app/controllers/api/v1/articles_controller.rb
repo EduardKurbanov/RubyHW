@@ -7,7 +7,8 @@ class Api::V1::ArticlesController < ApplicationController
     @articles = Article.all
     @comments = Comment.all
     @tags = Tag.all
-    render json: { authors: @authors, articles: @articles, comments: @comments, tags: @tags}, status: :ok
+    @likes = Like.all
+    render json: { authors: @authors, articles: @articles, comments: @comments, tags: @tags, likes: @likes}, status: :ok
   end
 
   # GET /api/v1/arricles?status=published

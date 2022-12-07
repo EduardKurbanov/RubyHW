@@ -20,6 +20,49 @@ Tag.create([
   }
 ])
 
+Like.create([
+  {
+    author_id: 1,
+    likeable_type: "Article",
+    likeable_id: 1
+  },
+  {
+    author_id: 2,
+    likeable_type: "Article",
+    likeable_id: 1
+  },
+  {
+    author_id: 3,
+    likeable_type: "Article",
+    likeable_id: 1
+  },
+  {
+    author_id: 4,
+    likeable_type: "Article",
+    likeable_id: 1
+  },
+  {
+    author_id: 1,
+    likeable_type: "Comment",
+    likeable_id: 1
+  },
+  {
+    author_id: 2,
+    likeable_type: "Comment",
+    likeable_id: 1
+  },
+  {
+    author_id: 3,
+    likeable_type: "Comment",
+    likeable_id: 1
+  },
+  {
+    author_id: 4,
+    likeable_type: "Comment",
+    likeable_id: 1
+  }
+])
+
 Article.create([
     {
       title: 'First article',
