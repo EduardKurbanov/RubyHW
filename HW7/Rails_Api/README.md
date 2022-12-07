@@ -39,6 +39,13 @@ http://127.0.0.1:3000/api/v1/articles?article[title]=test&article[body]=test&art
 ```ruby
 http://127.0.0.1:3000/api/v1/articles
 ```
+
+просмотер ```Article``` статуса спомошю ```GET``` запроса:
+
+```ruby
+http://127.0.0.1:3000/api/v1/arricles?status=published или unpublished
+```
+
 просмотер конкрет созданого ```Article``` спомошю ```GET``` запроса:
 
 ```ruby
@@ -68,6 +75,13 @@ http://127.0.0.1:3000/api/v1/comments?comment[body]=test_body&comment[status]=pu
 ```ruby
 http://127.0.0.1:3000/api/v1/comments
 ```
+
+просмотер ```Comment``` статуса спомошю ```GET``` запроса:
+
+```ruby
+http://127.0.0.1:3000/api/v1/comments?status=published или unpublished
+```
+
 
 обновить ```Comment``` спомошю ```PATCH``` запроса:
 
