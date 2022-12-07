@@ -10,8 +10,10 @@ class Api::V1::ArticlesController < ApplicationController
     render json: { authors: @authors, articles: @articles, comments: @comments, tags: @tags}, status: :ok
   end
 
+  # GET /api/v1/arricles?status=published
   def index
     @articles = Article.all
+    @articles = @articles.where(status: params[:status]) if params[:status]
     render json: {index_article: @articles}, status: :ok
   end
 
