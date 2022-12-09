@@ -18,7 +18,7 @@ class Api::V1::LikesController < ApplicationController
   def destroy
     @like = Like.find(params[:id])
     if @like.destroy
-      render json: { message: 'Unliked' }
+      render json: { message: 'del like' }
     else
       render json: {
         error: @like.errors.full_messages
