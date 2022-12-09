@@ -17,6 +17,15 @@ class Api::V1::AuthorsController < ApplicationController
     end
   end
 
+  def destroy
+    @author = Author.find(params[:id])
+    if @author.destroy
+      render json: {destroy_author: @author}, status: :no_content
+    else
+      render json: @author, status: :unprocessible_entity
+    end
+  end
+
   def author_params
     params.require(:author).permit(:name)
   end

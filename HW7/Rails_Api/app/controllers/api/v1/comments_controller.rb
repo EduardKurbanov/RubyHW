@@ -30,6 +30,16 @@ class Api::V1::CommentsController < ApplicationController
     end
   end
 
+  def update_starus
+    if @comment.update(comment_params_starus)
+      render json: {comment_update_status: @comment}, status: :ok
+    else
+      render json: {
+        error: @comment.errors.full_messages
+      }, status: :unprocessable_entity
+    end
+  end
+
   def destroy
     if @comment.destroy
       render json: {comment_destroy: @comment}, status: :no_content
@@ -48,5 +58,9 @@ class Api::V1::CommentsController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:body, :status, :author_id, :article_id)
-  end  
+  end
+
+  def comment_params_starus
+    params.require(:comment).permit(:status, :author_id, :article_id)
+  end    
 end

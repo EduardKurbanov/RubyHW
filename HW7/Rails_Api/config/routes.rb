@@ -6,11 +6,13 @@ Rails.application.routes.draw do
   root "api/v1/articles#index_all"
   namespace :api do
     namespace :v1 do
-      resources :authors, only: [:index, :create]
+      resources :authors, only: [:index, :create, :destroy]
       resources :articles, only: [:index, :show, :create, :update, :destroy] do
+        get :update_status
         resources :likes, only: [:create, :destroy]
       end
-      resources :comments, only: [:index, :create, :update, :destroy] do 
+      resources :comments, only: [:index, :create, :update, :destroy] do
+        get :update_status 
         resources :likes, only: [:create, :destroy]
       end
       resources :tags, only: [:index, :show, :create, :update, :destroy]

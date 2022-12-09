@@ -41,6 +41,14 @@ class Api::V1::ArticlesController < ApplicationController
     end
   end
 
+  def update_status
+    if @article.update(article_params_status)
+      render json: {update_article_status: @article}, status: :ok
+    else
+      render json: @article.errors, status: :unprocessable_entity
+    end
+  end
+
   def destroy
     if @article.destroy
       render json: {destroy_article: @article}, status: :no_content
@@ -57,5 +65,9 @@ class Api::V1::ArticlesController < ApplicationController
 
   def article_params
     params.require(:article).permit(:title, :body, :author_id, :status)
+  end
+
+  def article_params_status
+    params.require(:article).permit(:author_id, :status)
   end
 end
