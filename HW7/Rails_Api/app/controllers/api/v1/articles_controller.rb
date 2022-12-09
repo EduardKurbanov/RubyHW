@@ -68,6 +68,6 @@ class Api::V1::ArticlesController < ApplicationController
   end
 
   def article_params_status
-    params.require(:article).permit(:author_id, :status)
+    params.require(:article).permit(:status)
   end
 end
