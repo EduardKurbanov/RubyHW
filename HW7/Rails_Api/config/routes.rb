@@ -8,11 +8,11 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :authors, only: [:index, :create, :destroy]
       resources :articles, only: [:index, :show, :create, :update, :destroy] do
-        get :update_status
+        get :update_status, on: :member
         resources :likes, only: [:create, :destroy]
       end
       resources :comments, only: [:index, :create, :update, :destroy] do
-        get :update_status 
+        get :update_status, on: :member
         resources :likes, only: [:create, :destroy]
       end
       resources :tags, only: [:index, :show, :create, :update, :destroy]
