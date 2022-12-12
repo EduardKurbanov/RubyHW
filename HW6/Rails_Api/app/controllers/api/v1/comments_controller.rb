@@ -1,19 +1,17 @@
 class Api::V1::CommentsController < ApplicationController
-  before_action :set_comment, only: [:update, :destroy]
+  before_action :set_comment, only: [:update, :update_starus, :destroy]
   
+  # GET /api/v1/comments?status=published
   def index
-#    @article = Article.find(params[:article_id])
-#    @comments = @article.comment.all
-    @comments = Comment.where(status: params[:status] || :published)
-    render json: @comments, status: :ok
+    @comments = Comment.all
+    @comments = @comments.where(status: params[:status]) if params[:status]
+    render json: {comments_idex: @comments}, status: :ok
   end
   
   def create
     @comment = Comment.new(comment_params)
-    @comment.author_id = params[:author_id]
-    @comment.article_id = params[:article_id]
     if @comment.save
-      render json: @comment, status: :created
+      render json: {comment_create: @comment}, status: :created
     else
       render json: {
         error: @comment.errors.full_messages
@@ -23,7 +21,17 @@ class Api::V1::CommentsController < ApplicationController
 
   def update
     if @comment.update(comment_params)
-      render json: @comment, status: :ok
+      render json: {comment_update: @comment}, status: :ok
+    else
+      render json: {
+        error: @comment.errors.full_messages
+      }, status: :unprocessable_entity
+    end
+  end
+
+  def update_starus
+    if @comment.update(comment_params_starus)
+      render json: {comment_update_status: @comment}, status: :ok
     else
       render json: {
         error: @comment.errors.full_messages
@@ -33,7 +41,7 @@ class Api::V1::CommentsController < ApplicationController
 
   def destroy
     if @comment.destroy
-      render json: @comment, status: :no_content
+      render json: {comment_destroy: @comment}, status: :no_content
     else
       render json: {
         error: @comment.errors.full_messages
@@ -44,11 +52,14 @@ class Api::V1::CommentsController < ApplicationController
   private
 
   def set_comment
-    @article = Article.find(params[:article_id])
     @comment = Comment.find(params[:id])
   end
 
   def comment_params
-    params.require(:comment).permit(:body, :status)
-  end  
+    params.require(:comment).permit(:body, :status, :author_id, :article_id)
+  end
+
+  def comment_params_starus
+    params.require(:comment).permit(:status)
+  end    
 end

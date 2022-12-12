@@ -3,30 +3,78 @@
 * Ruby version 3.1.2
 * Ruby on Rails 7.0.4
 
-* создано app Rails_Api который возвряшает json по адресу http://127.0.0.1:3000
+* создано app Rails_Api адресу http://127.0.0.1:3000
 * взаимодействие с json:
 
-- POST   /api/v1/authors/:author_id/articles/:article_id/comments(.:format)
+# работа с api
+создание ```Author``` спомошю ```POST``` запроса:
 
-- PATCH  /api/v1/authors/:author_id/articles/:article_id/comments/:id(.:format)
+```ruby
+http://127.0.0.1:3000/api/v1/authors?author[name]=Tom
+```
+просмотер созданых ```Authors``` спомошю ```GET``` запроса:
 
-- PUT    /api/v1/authors/:author_id/articles/:article_id/comments/:id(.:format)
+```ruby
+http://127.0.0.1:3000/api/v1/authors
+```
+создание ```Article```  спомошю ```POST``` запроса:
 
-- DELETE /api/v1/authors/:author_id/articles/:article_id/comments/:id(.:format)
+```ruby
+http://127.0.0.1:3000/api/v1/articles?article[title]=test&article[body]=test&article[author_id]=:author_id&article[status]=published
+```
 
-- GET    /api/v1/authors/:author_id/articles(.:format)
+просмотер созданых ```Article``` спомошю ```GET``` запроса:
 
-- POST   /api/v1/authors/:author_id/articles(.:format)
+```ruby
+http://127.0.0.1:3000/api/v1/articles
+```
 
-- GET    /api/v1/authors/:author_id/articles/:id(.:format)
+просмотер конкрет созданого ```Article``` спомошю ```GET``` запроса:
 
-- PATCH  /api/v1/authors/:author_id/articles/:id(.:format)
+```ruby
+http://127.0.0.1:3000/api/v1/articles/:id
+```
 
-- PUT    /api/v1/authors/:author_id/articles/:id(.:format)
+обновить ```Article``` спомошю ```PATCH``` запроса:
 
-- DELETE /api/v1/authors/:author_id/articles/:id(.:format)
+```ruby
+http://127.0.0.1:3000/api/v1/articles/:id?article[title]=test1&article[body]=test1&article[author_id]=:author_id&article[status]=published
+```
 
-- GET    /api/v1/authors(.:format)
+удалить ```Article``` спомошю ```DELETE``` запроса:
 
-- POST   /api/v1/authors(.:format)
+```ruby
+http://127.0.0.1:3000/api/v1/articles/:id
+```
+
+создание ```Comment``` к ```Article```  спомошю ```POST``` запроса:
+
+```ruby
+http://127.0.0.1:3000/api/v1/comments?comment[body]=test_body&comment[status]=published&comment[author_id]=:author_id&comment[article_id]=:article_id
+```
+
+просмотер созданых ```Comment``` спомошю ```GET``` запроса:
+
+```ruby
+http://127.0.0.1:3000/api/v1/comments
+```
+
+просмотер ```Comment``` статуса спомошю ```GET``` запроса:
+
+```ruby
+http://127.0.0.1:3000/api/v1/comments?status=published или unpublished
+```
+
+
+обновить ```Comment``` спомошю ```PATCH``` запроса:
+
+```ruby
+http://127.0.0.1:3000/api/v1/comments/:id?comment[body]=test_body&comment[status]=published&comment[author_id]=:author_id&comment[article_id]=:article_id
+```
+
+удалить ```Comment``` спомошю ```DELETE``` запроса:
+
+```ruby
+http://127.0.0.1:3000/api/v1/comments/:id
+```
 

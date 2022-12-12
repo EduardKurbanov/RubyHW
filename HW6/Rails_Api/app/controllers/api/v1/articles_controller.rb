@@ -1,30 +1,20 @@
 class Api::V1::ArticlesController < ApplicationController
-  before_action :set_author_article, only: [:update, :destroy]
-
-  def index_all 
-    @authors = Author.all
-    @articles = Article.all
-    @comments = Comment.all
-    render json: { authors: @authors, articles: @articles, comments: @comments}, status: :ok
-  end
+  before_action :set_article, only: %i[show update destroy]
 
   def index
-    @author = Author.find(params[:author_id])
-    @articles = @author.articles.all
-    render json: @articles, status: :ok
+    @articles = Article.all
+    render json: {index_articles: @articles}, status: :ok
   end
 
   def show
-    @author = Author.find(params[:author_id])
-    @article = @author.articles.find(params[:id])
-    render json: {article: @article, comment: @article.comment}, status: :ok
+    @comments = @article.comment
+    render json: {article: @article, comment: @comments}, status: :ok
   end
 
   def create
     @article = Article.new(article_params)
-    @article.author_id = params[:author_id]
     if @article.save
-      render json: @article, status: :created
+      render json: {create_article: @article}, status: :created
     else
       render json: @article.errors, status: :unprocessable_entity
     end
@@ -32,7 +22,7 @@ class Api::V1::ArticlesController < ApplicationController
 
   def update
     if @article.update(article_params)
-      render json: @article, status: :ok
+      render json: {update_article: @article}, status: :ok
     else
       render json: @article.errors, status: :unprocessable_entity
     end
@@ -40,7 +30,7 @@ class Api::V1::ArticlesController < ApplicationController
 
   def destroy
     if @article.destroy
-      render json: @article, status: :no_content
+      render json: {destroy_article: @article}, status: :no_content
     else
       render json: @article, status: :unprocessible_entity
     end
@@ -48,12 +38,11 @@ class Api::V1::ArticlesController < ApplicationController
 
   private
 
-  def set_author_article
-    @author = Author.find(params[:author_id])
-    @article = @author.articles.find(params[:id])
+  def set_article
+    @article = Article.find(params[:id])
   end
 
   def article_params
-    params.require(:article).permit(:title, :body)
+    params.require(:article).permit(:title, :body, :author_id)
   end
 end

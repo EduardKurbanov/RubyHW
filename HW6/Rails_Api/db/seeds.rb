@@ -5,6 +5,18 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+Author.create([
+  {
+    name: 'TOM'
+  },
+  {
+    name: 'ED'
+  },
+  {
+    name: 'JECK'
+  }
+])
+
 Article.create([
     {
       title: 'First article',
@@ -28,18 +40,6 @@ Article.create([
     }
   ])
 
-Author.create([
-   {
-     name: 'TOM'
-   },
-   {
-     name: 'ED'
-   },
-   {
-     name: 'JECK'
-   }
- ])
-
 Comment.create([
     {
       body: 'TEST COMMEMT TOM',
@@ -50,20 +50,20 @@ Comment.create([
     {
       body: 'TEST COMMENT TOM',
       status: "published",
-      author_id: 1,
-      article_id: 1
+      author_id: 2,
+      article_id: 2
     },
     {
       body: 'TEST COMMENT ED',
       status: "unpublished",
-      author_id: 2,
-      article_id: 1
+      author_id: 3,
+      article_id: 3
     },
     {
       body: 'TEST COMMENT JECK',
       status: "published",
-      author_id: 3,
-      article_id: 1
+      author_id: 1,
+      article_id: 4
     },
     {
       body: 'TEST COMMENT ED',
