@@ -24,7 +24,6 @@ class Api::V1::TagsController < ApplicationController
   end
 
   def update
-    @tag = Tag.find(params[:id])
     if @tag.update(tag_params)
       render json: {tag_update: @tag}, status: :ok
     else
@@ -35,7 +34,6 @@ class Api::V1::TagsController < ApplicationController
   end
   
   def destroy
-    @tag = Tag.find(params[:id])
     if @tag.destroy
       render json: {tag_gestroy: @tag}, status: :created
     else
