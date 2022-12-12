@@ -1,5 +1,5 @@
 class Api::V1::CommentsController < ApplicationController
-  before_action :set_comment, only: [:update, :update_starus, :destroy]
+  before_action :set_comment, only: %i[update update_starus destroy]
   
   # GET /api/v1/comments?status=published
   def index

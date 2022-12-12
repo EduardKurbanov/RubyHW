@@ -6,9 +6,9 @@ Rails.application.routes.draw do
   #root "api/v1/articles#index_all"
   namespace :api do
     namespace :v1 do
-      resources :authors, only: [:index, :create]
-      resources :articles, only: [:index, :show, :create, :update, :destroy]
-      resources :comments, only: [:index, :create, :update, :destroy] do
+      resources :authors, only: %i[index create]
+      resources :articles, only: %i[index show create update destroy]
+      resources :comments, only: %i[index create update destroy] do
         get :update_status, on: :member
       end
     end
