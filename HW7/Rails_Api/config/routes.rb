@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
-  root "api/v1/articles#index_all"
+  #root "api/v1/articles#index_all"
   namespace :api do
     namespace :v1 do
       resources :authors, only: %i[index create destroy]
