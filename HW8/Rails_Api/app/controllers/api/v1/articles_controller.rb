@@ -4,7 +4,7 @@ class Api::V1::ArticlesController < ApplicationController
 
   # GET /api/v1/arricles?status=published
   # GET /api/v1/arricles?order=asc/desc
-  # GET /api/v1/arricles?search_ph=iot (search_ph:title = first, search_ph:body = one, search_ph:tag = iot)
+  # GET /api/v1/arricles?search_ph=iot (search_ph:title = first, search_ph:body = one)
   # GET /api/v1/arricles?author=tom
   # GET /api/v1/arricles?author=tom
   # GET /api/v1/articles?search_tag=iot&rails
