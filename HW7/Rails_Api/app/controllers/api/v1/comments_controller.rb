@@ -1,6 +1,6 @@
 class Api::V1::CommentsController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :set_comment, only: [:update, :update_starus, :destroy]
+  before_action :set_comment, only: %i[update update_starus destroy]
   
   # GET /api/v1/comments?status=published
   def index

@@ -1,6 +1,6 @@
 class Api::V1::TagsController < ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :set_tag, only: [:show, :update, :destroy]
+  before_action :set_tag, only: %i[show update destroy]
 
   def index
     @tags = Tag.all
