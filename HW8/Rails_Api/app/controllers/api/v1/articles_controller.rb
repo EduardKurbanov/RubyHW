@@ -29,7 +29,7 @@ class Api::V1::ArticlesController < ApplicationController
   def create
     @article = Article.new(article_params)
     if @article.save
-      render json: {create_article: @article}, status: :created
+      render json: {create_article: @article, tags: @article.tags}, status: :created
     else
       render json: @article.errors, status: :unprocessable_entity
     end
@@ -67,7 +67,7 @@ class Api::V1::ArticlesController < ApplicationController
   end
 
   def article_params
-    params.require(:article).permit(:title, :body, :author_id, :status)
+    params.require(:article).permit(:title, :body, :author_id, :status, :all_tags)
   end
 
   def article_params_status

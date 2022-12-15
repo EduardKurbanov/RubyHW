@@ -37,7 +37,7 @@ http://127.0.0.1:3000/api/v1/authors/:id
 создание ```Article```  спомошю ```POST``` запроса:
 
 ```ruby
-http://127.0.0.1:3000/api/v1/articles?article[title]=test&article[body]=test&article[author_id]=:author_id&article[status]=published
+http://127.0.0.1:3000/api/v1/articles?article[title]=test&article[body]=test&article[author_id]=:author_id&article[status]=published&article[all_tags]=ruby,iot,rails
 ```
 
 просмотер созданых ```Article``` спомошю ```GET``` запроса:
