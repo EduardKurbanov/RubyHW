@@ -2,15 +2,6 @@ class Api::V1::ArticlesController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :set_article, only: %i[show update update_status destroy]
 
-  def index_all 
-    @authors = Author.all
-    @articles = Article.all
-    @comments = Comment.all
-    @tags = Tag.all
-    @likes = Like.all
-    render json: { authors: @authors, articles: @articles, comments: @comments, tags: @tags, likes: @likes}, status: :ok
-  end
-
   # GET /api/v1/arricles?status=published
   def index
     @articles = Article.all
@@ -27,7 +18,7 @@ class Api::V1::ArticlesController < ApplicationController
   def create
     @article = Article.new(article_params)
     if @article.save
-      render json: {create_article: @article}, status: :created
+      render json: {create_article: @article, tags: @article.tags}, status: :created
     else
       render json: @article.errors, status: :unprocessable_entity
     end
@@ -64,7 +55,7 @@ class Api::V1::ArticlesController < ApplicationController
   end
 
   def article_params
-    params.require(:article).permit(:title, :body, :author_id, :status)
+    params.require(:article).permit(:title, :body, :author_id, :status, :all_tegs)
   end
 
   def article_params_status
