@@ -34,7 +34,7 @@ http://127.0.0.1:3000/api/v1/authors
 http://127.0.0.1:3000/api/v1/articles?article[title]=test&article[body]=test&article[author_id]=:author_id&article[status]=published
 ```
 
-добавить ```Tag``` к ```Article```
+добавить ```Tag``` к ```Article``` спомошю ```GET``` запроса:
 ```
 http://127.0.0.1:3000/api/v1/articles/:id/tag_add?tag=iot
 ```
