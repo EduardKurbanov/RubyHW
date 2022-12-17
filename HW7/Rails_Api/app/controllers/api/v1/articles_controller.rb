@@ -47,6 +47,12 @@ class Api::V1::ArticlesController < ApplicationController
       render json: @article, status: :unprocessible_entity
     end
   end
+  
+  def tag_add 
+    @article = Article.find(params[:id])
+    @article.all_tags=(params[:tag])
+    render json: { article: @article, tags: @article.tags }, status: :created
+  end
 
   private
 
