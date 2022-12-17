@@ -1,0 +1,318 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/articles/{id}/update_status":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: update_status article
+      tags:
+      - Articles
+      parameters:
+      - name: status
+        in: query
+        description: обновить статус статьи как published или unpublished
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+  "/api/v1/articles":
+    get:
+      summary: list articles
+      tags:
+      - Articles
+      parameters:
+      - name: status
+        in: query
+        description: возвращает статью со статусом published или unpublished
+        schema:
+          type: string
+      - name: search_ph
+        in: query
+        description: Поиск статей по фразе в заголовке и теле.
+        schema:
+          type: string
+      - name: author
+        in: query
+        description: Поиск статей по автору.
+        schema:
+          type: string
+      - name: order
+        in: query
+        description: Сортировать статьи по asc и desc
+        schema:
+          type: string
+      - name: search_tag
+        in: query
+        description: Искать статьи по тегам (разделять теги ",").
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create article
+      tags:
+      - Articles
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                body:
+                  type: string
+                author_id:
+                  type: integer
+                stutus:
+                  type: string
+                all_tags:
+                  type: string
+              required:
+              - title
+              - body
+              - author_id
+              - status
+              - all_tags
+  "/api/v1/articles/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: show article
+      tags:
+      - Articles
+      responses:
+        '200':
+          description: successful
+    patch:
+      summary: update article
+      tags:
+      - Articles
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                body:
+                  type: string
+                author_id:
+                  type: integer
+                stutus:
+                  type: string
+                  enum:
+                  - unpublished
+                  - published
+                all_tags:
+                  type: string
+              required:
+              - title
+              - body
+              - author_id
+              - status
+    put:
+      summary: update article
+      tags:
+      - Articles
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                body:
+                  type: string
+                author_id:
+                  type: integer
+                stutus:
+                  type: string
+                  enum:
+                  - unpublished
+                  - published
+                all_tags:
+                  type: string
+              required:
+              - title
+              - body
+              - author_id
+              - status
+    delete:
+      summary: delete article
+      tags:
+      - Articles
+      responses:
+        '200':
+          description: successful
+  "/api/v1/comments/{id}/update_status":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    get:
+      summary: update_status comment
+      tags:
+      - Comments
+      parameters:
+      - name: status
+        in: query
+        description: обновить статус комментария как published или unpublished
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+  "/api/v1/comments":
+    get:
+      summary: list comments
+      tags:
+      - Comments
+      parameters:
+      - name: status
+        in: query
+        description: возвращает комментарии со статусом published или unpublished
+        schema:
+          type: string
+      - name: last
+        in: query
+        description: 'возвращает комментарии последнего лимита с limit: integer.'
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create comment
+      tags:
+      - Comments
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+                stutus:
+                  type: string
+                author_id:
+                  type: integer
+                article_id:
+                  type: integer
+              required:
+              - body
+              - status
+              - author_id
+              - article_id
+  "/api/v1/comments/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: id
+      required: true
+      schema:
+        type: string
+    patch:
+      summary: update comment
+      tags:
+      - Comments
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+                stutus:
+                  type: string
+                author_id:
+                  type: integer
+                article_id:
+                  type: integer
+              required:
+              - body
+              - status
+              - author_id
+              - article_id
+    put:
+      summary: update comment
+      tags:
+      - Comments
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+                stutus:
+                  type: string
+                author_id:
+                  type: integer
+                article_id:
+                  type: integer
+              required:
+              - body
+              - status
+              - author_id
+              - article_id
+    delete:
+      summary: delete comment
+      tags:
+      - Comments
+      responses:
+        '200':
+          description: successful
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: 127.0.0.1:3000
