@@ -15,7 +15,7 @@ RSpec.describe 'api/v1/articles', type: :request do
       }, description: 'обновить статус статьи как published или unpublished'
 
       response(200, 'successful') do
-        let(:id) { '123' }
+        let(:id) { create(:article).id }
 
         after do |example|
           example.metadata[:response][:content] = {
@@ -24,6 +24,11 @@ RSpec.describe 'api/v1/articles', type: :request do
             }
           }
         end
+        run_test!
+      end
+
+      response(404, :not_found) do
+        let!(:id) { 'invalid' }
         run_test!
       end
     end
@@ -40,7 +45,10 @@ RSpec.describe 'api/v1/articles', type: :request do
       } , description: 'возвращает статью со статусом published или unpublished'
       parameter name: :search_ph, in: :query, type: :string, description: 'Поиск статей по фразе в заголовке и теле.'
       parameter name: :author, in: :query, type: :string, description: 'Поиск статей по автору.'
-      parameter name: :order, in: :query, type: :string, description: 'Сортировать статьи по asc и desc'
+      parameter name: :order, in: :query, schema: {
+        type: :string,
+        enum: ['asc', 'desc'],
+      }, description: 'Сортировать статьи по asc и desc'
       parameter name: :search_tag, in: :query, type: :string, description: 'Искать статьи по тегам (разделять теги ",").'
 
       response(200, 'successful') do

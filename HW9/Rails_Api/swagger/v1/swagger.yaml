@@ -28,6 +28,8 @@ paths:
       responses:
         '200':
           description: successful
+        '404':
+          description: not_found
   "/api/v1/articles":
     get:
       summary: list articles
@@ -54,9 +56,12 @@ paths:
           type: string
       - name: order
         in: query
-        description: Сортировать статьи по asc и desc
         schema:
           type: string
+          enum:
+          - asc
+          - desc
+        description: Сортировать статьи по asc и desc
       - name: search_tag
         in: query
         description: Искать статьи по тегам (разделять теги ",").
