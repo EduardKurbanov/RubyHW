@@ -9,7 +9,10 @@ RSpec.describe 'api/v1/articles', type: :request do
     get('update_status article') do
       tags 'Articles'
       consumes 'application/json'
-      parameter name: :status, in: :query, type: :string, description: 'обновить статус статьи как published или unpublished'
+      parameter name: :status, in: :query, schema: {
+        type: :string,
+        enum: ['unpublished', 'published'],
+      }, description: 'обновить статус статьи как published или unpublished'
 
       response(200, 'successful') do
         let(:id) { '123' }
@@ -31,7 +34,10 @@ RSpec.describe 'api/v1/articles', type: :request do
     get('list articles') do
       tags 'Articles'
       consumes 'application/json'
-      parameter name: :status, in: :query, type: :string, description: 'возвращает статью со статусом published или unpublished'
+      parameter name: :status, in: :query, schema: {
+        type: :string,
+        enum: ['unpublished', 'published'],
+      } , description: 'возвращает статью со статусом published или unpublished'
       parameter name: :search_ph, in: :query, type: :string, description: 'Поиск статей по фразе в заголовке и теле.'
       parameter name: :author, in: :query, type: :string, description: 'Поиск статей по автору.'
       parameter name: :order, in: :query, type: :string, description: 'Сортировать статьи по asc и desc'

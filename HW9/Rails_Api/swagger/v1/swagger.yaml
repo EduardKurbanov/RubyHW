@@ -11,7 +11,7 @@ paths:
       description: id
       required: true
       schema:
-        type: string
+        type: integer
     get:
       summary: update_status article
       tags:
@@ -19,9 +19,12 @@ paths:
       parameters:
       - name: status
         in: query
-        description: обновить статус статьи как published или unpublished
         schema:
           type: string
+          enum:
+          - unpublished
+          - published
+        description: обновить статус статьи как published или unpublished
       responses:
         '200':
           description: successful
@@ -33,9 +36,12 @@ paths:
       parameters:
       - name: status
         in: query
-        description: возвращает статью со статусом published или unpublished
         schema:
           type: string
+          enum:
+          - unpublished
+          - published
+        description: возвращает статью со статусом published или unpublished
       - name: search_ph
         in: query
         description: Поиск статей по фразе в заголовке и теле.
@@ -81,14 +87,14 @@ paths:
                   type: integer
                 stutus:
                   type: string
-                all_tags:
-                  type: string
+                  enum:
+                  - unpublished
+                  - published
               required:
               - title
               - body
               - author_id
               - status
-              - all_tags
   "/api/v1/articles/{id}":
     parameters:
     - name: id
@@ -96,7 +102,7 @@ paths:
       description: id
       required: true
       schema:
-        type: string
+        type: integer
     get:
       summary: show article
       tags:
@@ -129,8 +135,6 @@ paths:
                   enum:
                   - unpublished
                   - published
-                all_tags:
-                  type: string
               required:
               - title
               - body
@@ -161,8 +165,6 @@ paths:
                   enum:
                   - unpublished
                   - published
-                all_tags:
-                  type: string
               required:
               - title
               - body
@@ -182,7 +184,7 @@ paths:
       description: id
       required: true
       schema:
-        type: string
+        type: integer
     get:
       summary: update_status comment
       tags:
@@ -190,9 +192,12 @@ paths:
       parameters:
       - name: status
         in: query
-        description: обновить статус комментария как published или unpublished
         schema:
           type: string
+          enum:
+          - unpublished
+          - published
+        description: обновить статус комментария как published или unpublished
       responses:
         '200':
           description: successful
@@ -204,9 +209,12 @@ paths:
       parameters:
       - name: status
         in: query
-        description: возвращает комментарии со статусом published или unpublished
         schema:
           type: string
+          enum:
+          - unpublished
+          - published
+        description: возвращает комментарии со статусом published или unpublished
       - name: last
         in: query
         description: 'возвращает комментарии последнего лимита с limit: integer.'
@@ -233,6 +241,9 @@ paths:
                   type: string
                 stutus:
                   type: string
+                  enum:
+                  - unpublished
+                  - published
                 author_id:
                   type: integer
                 article_id:
@@ -249,7 +260,7 @@ paths:
       description: id
       required: true
       schema:
-        type: string
+        type: integer
     patch:
       summary: update comment
       tags:
@@ -268,6 +279,9 @@ paths:
                   type: string
                 stutus:
                   type: string
+                  enum:
+                  - unpublished
+                  - published
                 author_id:
                   type: integer
                 article_id:

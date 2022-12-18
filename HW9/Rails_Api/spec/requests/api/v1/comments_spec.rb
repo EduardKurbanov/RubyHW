@@ -9,7 +9,10 @@ RSpec.describe 'api/v1/comments', type: :request do
     get('update_status comment') do
       tags 'Comments'
       consumes 'application/json'
-      parameter name: :status, in: :query, type: :string, description: 'обновить статус комментария как published или unpublished'
+      parameter name: :status, in: :query, schema: {
+        type: :string,
+        enum: ['unpublished', 'published'],
+      }, description: 'обновить статус комментария как published или unpublished'
 
       response(200, 'successful') do
         let(:id) { '123' }
@@ -31,7 +34,10 @@ RSpec.describe 'api/v1/comments', type: :request do
     get('list comments') do
       tags 'Comments'
       consumes 'application/json'
-      parameter name: :status, in: :query, type: :string, description: 'возвращает комментарии со статусом published или unpublished'
+      parameter name: :status, in: :query, schema: {
+        type: :string,
+        enum: ['unpublished', 'published'],
+      }, description: 'возвращает комментарии со статусом published или unpublished'
       parameter name: :last, in: :query, type: :integer, description: 'возвращает комментарии последнего лимита с limit: integer.'
 
       response(200, 'successful') do
