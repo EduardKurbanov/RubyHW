@@ -4,7 +4,7 @@ RSpec.describe 'api/v1/comments', type: :request do
 
   path '/api/v1/comments/{id}/update_status' do
     # You'll want to customize the parameter types...
-    parameter name: 'id', in: :path, type: :string, description: 'id'
+    parameter name: 'id', in: :path, type: :integer, description: 'id'
 
     get('update_status comment') do
       tags 'Comments'
@@ -54,7 +54,7 @@ RSpec.describe 'api/v1/comments', type: :request do
         type: :object,
         properties: {
           body: { type: :string },
-          stutus: { type: :string },
+          stutus: { type: :string, enum: %w[unpublished published] },
           author_id: { type: :integer },
           article_id: { type: :integer }
         },
@@ -76,7 +76,7 @@ RSpec.describe 'api/v1/comments', type: :request do
 
   path '/api/v1/comments/{id}' do
     # You'll want to customize the parameter types...
-    parameter name: 'id', in: :path, type: :string, description: 'id'
+    parameter name: 'id', in: :path, type: :integer, description: 'id'
 
     patch('update comment') do
       tags 'Comments'
@@ -85,7 +85,7 @@ RSpec.describe 'api/v1/comments', type: :request do
         type: :object,
         properties: {
           body: { type: :string },
-          stutus: { type: :string },
+          stutus: { type: :string, enum: %w[unpublished published] },
           author_id: { type: :integer },
           article_id: { type: :integer }
         },

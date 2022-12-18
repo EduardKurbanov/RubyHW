@@ -4,7 +4,7 @@ RSpec.describe 'api/v1/articles', type: :request do
 
   path '/api/v1/articles/{id}/update_status' do
     # You'll want to customize the parameter types...
-    parameter name: 'id', in: :path, type: :string, description: 'id'
+    parameter name: 'id', in: :path, type: :integer, description: 'id'
 
     get('update_status article') do
       tags 'Articles'
@@ -60,10 +60,9 @@ RSpec.describe 'api/v1/articles', type: :request do
           title: { type: :string },
           body: { type: :string },
           author_id: { type: :integer },
-          stutus: { type: :string },
-          all_tags: {type: :string}
+          stutus: { type: :string, enum: %w[unpublished published] }
         },
-        required: [ 'title', 'body', 'author_id', 'status', 'all_tags' ]}
+        required: [ 'title', 'body', 'author_id', 'status' ]}
       
 
       response(200, 'successful') do
@@ -82,7 +81,7 @@ RSpec.describe 'api/v1/articles', type: :request do
 
   path '/api/v1/articles/{id}' do
     # You'll want to customize the parameter types...
-    parameter name: 'id', in: :path, type: :string, description: 'id'
+    parameter name: 'id', in: :path, type: :integer, description: 'id'
 
     get('show article') do
       tags 'Articles'
@@ -112,7 +111,6 @@ RSpec.describe 'api/v1/articles', type: :request do
           body: { type: :string },
           author_id: { type: :integer },
           stutus: { type: :string, enum: %w[unpublished published] },
-          all_tags: {type: :string}
         },
         required: [ 'title', 'body', 'author_id', 'status' ]}
       
@@ -140,7 +138,6 @@ RSpec.describe 'api/v1/articles', type: :request do
           body: { type: :string },
           author_id: { type: :integer },
           stutus: { type: :string, enum: %w[unpublished published] },
-          all_tags: {type: :string}
         },
         required: [ 'title', 'body', 'author_id', 'status' ]}
 
