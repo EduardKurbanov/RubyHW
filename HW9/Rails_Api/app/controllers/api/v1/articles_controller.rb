@@ -18,7 +18,8 @@ class Api::V1::ArticlesController < ApplicationController
 
     @pagy, @articles = pagy(@articles, page: params[:page], items: 15)
 
-    render json: {article_index: @articles}, status: :ok
+    render json: @articles, status: :ok
+
   end
 
   # GET /api/v1/arricles/1?last=1

@@ -1,6 +1,11 @@
 require 'swagger_helper'
 
 RSpec.describe 'api/v1/articles', type: :request do
+  let(:author_a) { Author.create(name: 'TOM') }
+  let(:article) { Article.create(title: 'test title', body: 'test body', author_id: author_a.id) }
+  let(:comment) { Comment.create(body: 'test title comment', article_id: article.id, author_id: author_a.id) }
+  let(:tag) { Tag.create(title: 'ruby') }
+  let(:id) { article.id }
 
   path '/api/v1/articles/{id}/update_status' do
     # You'll want to customize the parameter types...
@@ -14,12 +19,9 @@ RSpec.describe 'api/v1/articles', type: :request do
         type: :string,
         enum: ['unpublished', 'published'],
         default: 'unpublished'
-
       }, description: 'обновить статус статьи как published или unpublished'
 
       response(200, 'successful') do
-
-#        let(:id) { Article.create(title: 'foo', boby: 'bar', status: 'published').id }
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -29,15 +31,11 @@ RSpec.describe 'api/v1/articles', type: :request do
         end
         run_test!
       end
-
-      response(404, :not_found) do
-        let!(:id) { 'invalid' }
-        run_test!
-      end
     end
   end
 
   path '/api/v1/articles' do
+    let(:author) { Author.create(name: 'TOM1') }
 
     get('list articles') do
       tags 'Articles'
@@ -57,6 +55,26 @@ RSpec.describe 'api/v1/articles', type: :request do
       parameter name: :search_tag, in: :query, type: :string, description: 'Искать статьи по тегам (разделять теги ",").'
 
       response(200, 'successful') do
+        let(:status) { 'unpublished' }
+        let(:search_ph) { 'title' }
+        let(:author) { 'TOM' }
+        let(:search_tag) { Tag.first }
+        let(:order) { 'desc' }
+
+        describe 'queries filters for api/v1/articles' do
+          it 'Filter with author' do
+            expect(author_a.name).to eq(Author.find_by(name: author).name)
+          end
+
+          it 'Filter with tags' do
+            article.tags << tag
+            expect(article.tags.where(title: 'ruby')).to eq(Article.first.tags)
+          end
+
+          it 'Filter with status' do
+            expect(article).to eq(Article.find_by(status: status))
+          end
+        end
 
         after do |example|
           example.metadata[:response][:content] = {
@@ -83,8 +101,8 @@ RSpec.describe 'api/v1/articles', type: :request do
         },
         required: [ 'title', 'body', 'author_id', 'status' ]}
       
-
-      response(200, 'successful') do
+      response(201, 'successful') do
+        let(:article) { { title: 'test title', body: 'test body', author_id: author.id, status: 'unpublished' } }
 
         after do |example|
           example.metadata[:response][:content] = {
@@ -104,11 +122,8 @@ RSpec.describe 'api/v1/articles', type: :request do
 
     get('show article') do
       tags 'Articles'
-      consumes 'application/json'
 
       response(200, 'successful') do
-        let(:id) { '123' }
-
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -135,7 +150,12 @@ RSpec.describe 'api/v1/articles', type: :request do
         required: [ 'title', 'body', 'author_id', 'status' ]}
       
       response(200, 'successful') do
-        let(:id) { '123' }
+        describe 'PATCH api/v1/articles/{id}' do
+          it 'check patch article' do
+            article.update(body: 'test body')
+            expect(Article.find_by(body: 'test body')).to eq(article)
+          end
+        end
 
         after do |example|
           example.metadata[:response][:content] = {
@@ -163,7 +183,12 @@ RSpec.describe 'api/v1/articles', type: :request do
         required: [ 'title', 'body', 'author_id', 'status' ]}
 
       response(200, 'successful') do
-        let(:id) { '123' }
+        describe 'PUT api/v1/articles/{id}' do
+          it 'check put article' do
+            article.update(body: 'test body')
+            expect(Article.find_by(body: 'test body')).to eq(article)
+          end
+        end
 
         after do |example|
           example.metadata[:response][:content] = {
@@ -178,21 +203,13 @@ RSpec.describe 'api/v1/articles', type: :request do
 
     delete('delete article') do
       tags 'Articles'
-      response(200, 'successful') do
-        let(:id) { '123' }
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
+      response(204, 'successful') do
+        describe 'DELETE api/v1/articles/{id}' do
+          it 'delete article' do
+            article.destroy
+            expect(Article.count).to eq(0)
+          end
         end
-        run_test!
-      end
-
-      response(404, :not_found) do
-        let!(:id) { 'invalid' }
         run_test!
       end
     end

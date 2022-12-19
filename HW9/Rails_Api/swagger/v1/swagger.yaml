@@ -29,8 +29,6 @@ paths:
       responses:
         '200':
           description: successful
-        '404':
-          description: not_found
   "/api/v1/articles":
     get:
       summary: list articles
@@ -78,7 +76,7 @@ paths:
       - Articles
       parameters: []
       responses:
-        '200':
+        '201':
           description: successful
       requestBody:
         content:
@@ -185,10 +183,8 @@ paths:
       tags:
       - Articles
       responses:
-        '200':
+        '204':
           description: successful
-        '404':
-          description: not_found
   "/api/v1/comments/{id}/update_status":
     parameters:
     - name: id
@@ -243,7 +239,7 @@ paths:
       - Comments
       parameters: []
       responses:
-        '200':
+        '201':
           description: successful
       requestBody:
         content:
@@ -343,7 +339,7 @@ paths:
       tags:
       - Comments
       responses:
-        '200':
+        '204':
           description: successful
 servers:
 - url: http://{defaultHost}

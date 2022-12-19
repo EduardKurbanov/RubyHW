@@ -6,7 +6,7 @@ class Api::V1::CommentsController < ApplicationController
   # GET /api/v1/comments?last=1
   def index
     @comments = Comment.all
-    @comments = @comments.get_all_by_sort_desc
+#    @comments = @comments.get_all_by_sort_desc
     @comments = @comments.status_position_comment(params[:status]) if params[:status].present?
     @comments = @comments.get_comment_limit(params[:last]) if params[:last].present?
     render json: {comment_idex: @comments}, status: :ok
