@@ -16,6 +16,11 @@ rails db:migrate
 rails db:seed
 rails s
 ```
+# работа с api-doc
+
+```ruby
+http://127.0.0.1:3000/api-docs/index.html
+```
 
 # работа с api
 создание ```Author``` спомошю ```POST``` запроса:
