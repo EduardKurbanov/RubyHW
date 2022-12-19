@@ -9,7 +9,7 @@ class Api::V1::ArticlesController < ApplicationController
   # GET /api/v1/articles?search_tag=iot,rails
   def index
     @articles = Article.all
-    @articles = @articles.get_article_all
+#    @articles = @articles.get_article_all
     @articles = @articles.status_position_article(params[:status]) if params[:status].present?
     @articles = Article.search_for_a_phrase_in_an_article(params[:search_ph]) if params[:search_ph].present?
     @articles = @articles.filter_by_author(params[:author]) if params[:author].present?
@@ -18,7 +18,7 @@ class Api::V1::ArticlesController < ApplicationController
 
     @pagy, @articles = pagy(@articles, page: params[:page], items: 15)
 
-    render json: @articles, status: :ok
+    render json: {article_index: @articles}, status: :ok
   end
 
   # GET /api/v1/arricles/1?last=1

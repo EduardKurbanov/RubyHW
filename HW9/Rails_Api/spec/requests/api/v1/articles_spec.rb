@@ -9,14 +9,17 @@ RSpec.describe 'api/v1/articles', type: :request do
     get('update_status article') do
       tags 'Articles'
       consumes 'application/json'
+
       parameter name: :status, in: :query, schema: {
         type: :string,
         enum: ['unpublished', 'published'],
+        default: 'unpublished'
+
       }, description: 'обновить статус статьи как published или unpublished'
 
       response(200, 'successful') do
-        let(:id) { create(:article).id }
 
+#        let(:id) { Article.create(title: 'foo', boby: 'bar', status: 'published').id }
         after do |example|
           example.metadata[:response][:content] = {
             'application/json' => {
@@ -39,10 +42,12 @@ RSpec.describe 'api/v1/articles', type: :request do
     get('list articles') do
       tags 'Articles'
       consumes 'application/json'
+
       parameter name: :status, in: :query, schema: {
         type: :string,
         enum: ['unpublished', 'published'],
-      } , description: 'возвращает статью со статусом published или unpublished'
+        default: 'unpublished'
+      }, description: 'возвращает статью со статусом published или unpublished'
       parameter name: :search_ph, in: :query, type: :string, description: 'Поиск статей по фразе в заголовке и теле.'
       parameter name: :author, in: :query, type: :string, description: 'Поиск статей по автору.'
       parameter name: :order, in: :query, schema: {
@@ -74,7 +79,7 @@ RSpec.describe 'api/v1/articles', type: :request do
           title: { type: :string },
           body: { type: :string },
           author_id: { type: :integer },
-          stutus: { type: :string, enum: %w[unpublished published] }
+          status: { type: :string, enum: %w[unpublished published], default: 'unpublished' }
         },
         required: [ 'title', 'body', 'author_id', 'status' ]}
       
@@ -118,13 +123,14 @@ RSpec.describe 'api/v1/articles', type: :request do
     patch('update article') do
       tags 'Articles'
       consumes 'application/json'
+
       parameter name: :article, in: :body, schema: {
         type: :object,
         properties: {
           title: { type: :string },
           body: { type: :string },
           author_id: { type: :integer },
-          stutus: { type: :string, enum: %w[unpublished published] },
+          status: { type: :string, enum: %w[unpublished published], default: 'unpublished' },
         },
         required: [ 'title', 'body', 'author_id', 'status' ]}
       
@@ -145,13 +151,14 @@ RSpec.describe 'api/v1/articles', type: :request do
     put('update article') do
       tags 'Articles'
       consumes 'application/json'
+
       parameter name: :article, in: :body, schema: {
         type: :object,
         properties: {
           title: { type: :string },
           body: { type: :string },
           author_id: { type: :integer },
-          stutus: { type: :string, enum: %w[unpublished published] },
+          status: { type: :string, enum: %w[unpublished published], default: 'unpublished' },
         },
         required: [ 'title', 'body', 'author_id', 'status' ]}
 
@@ -181,6 +188,11 @@ RSpec.describe 'api/v1/articles', type: :request do
             }
           }
         end
+        run_test!
+      end
+
+      response(404, :not_found) do
+        let!(:id) { 'invalid' }
         run_test!
       end
     end

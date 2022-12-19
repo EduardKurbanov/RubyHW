@@ -24,6 +24,7 @@ paths:
           enum:
           - unpublished
           - published
+          default: unpublished
         description: обновить статус статьи как published или unpublished
       responses:
         '200':
@@ -43,6 +44,7 @@ paths:
           enum:
           - unpublished
           - published
+          default: unpublished
         description: возвращает статью со статусом published или unpublished
       - name: search_ph
         in: query
@@ -90,11 +92,12 @@ paths:
                   type: string
                 author_id:
                   type: integer
-                stutus:
+                status:
                   type: string
                   enum:
                   - unpublished
                   - published
+                  default: unpublished
               required:
               - title
               - body
@@ -135,11 +138,12 @@ paths:
                   type: string
                 author_id:
                   type: integer
-                stutus:
+                status:
                   type: string
                   enum:
                   - unpublished
                   - published
+                  default: unpublished
               required:
               - title
               - body
@@ -165,11 +169,12 @@ paths:
                   type: string
                 author_id:
                   type: integer
-                stutus:
+                status:
                   type: string
                   enum:
                   - unpublished
                   - published
+                  default: unpublished
               required:
               - title
               - body
@@ -182,6 +187,8 @@ paths:
       responses:
         '200':
           description: successful
+        '404':
+          description: not_found
   "/api/v1/comments/{id}/update_status":
     parameters:
     - name: id
@@ -202,6 +209,7 @@ paths:
           enum:
           - unpublished
           - published
+          default: unpublished
         description: обновить статус комментария как published или unpublished
       responses:
         '200':
@@ -219,6 +227,7 @@ paths:
           enum:
           - unpublished
           - published
+          default: unpublished
         description: возвращает комментарии со статусом published или unpublished
       - name: last
         in: query
@@ -244,11 +253,12 @@ paths:
               properties:
                 body:
                   type: string
-                stutus:
+                status:
                   type: string
                   enum:
                   - unpublished
                   - published
+                  default: unpublished
                 author_id:
                   type: integer
                 article_id:
@@ -282,11 +292,12 @@ paths:
               properties:
                 body:
                   type: string
-                stutus:
+                status:
                   type: string
                   enum:
                   - unpublished
                   - published
+                  default: unpublished
                 author_id:
                   type: integer
                 article_id:
@@ -312,8 +323,12 @@ paths:
               properties:
                 body:
                   type: string
-                stutus:
+                status:
                   type: string
+                  enum:
+                  - unpublished
+                  - published
+                  default: unpublished
                 author_id:
                   type: integer
                 article_id:

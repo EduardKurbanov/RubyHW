@@ -9,9 +9,11 @@ RSpec.describe 'api/v1/comments', type: :request do
     get('update_status comment') do
       tags 'Comments'
       consumes 'application/json'
+
       parameter name: :status, in: :query, schema: {
         type: :string,
         enum: ['unpublished', 'published'],
+        default: 'unpublished'
       }, description: 'обновить статус комментария как published или unpublished'
 
       response(200, 'successful') do
@@ -34,10 +36,13 @@ RSpec.describe 'api/v1/comments', type: :request do
     get('list comments') do
       tags 'Comments'
       consumes 'application/json'
+
       parameter name: :status, in: :query, schema: {
         type: :string,
         enum: ['unpublished', 'published'],
+        default: 'unpublished'
       }, description: 'возвращает комментарии со статусом published или unpublished'
+
       parameter name: :last, in: :query, type: :integer, description: 'возвращает комментарии последнего лимита с limit: integer.'
 
       response(200, 'successful') do
@@ -56,11 +61,12 @@ RSpec.describe 'api/v1/comments', type: :request do
     post('create comment') do
       tags 'Comments'
       consumes 'application/json'
+
       parameter name: :comment, in: :body, schema: {
         type: :object,
         properties: {
           body: { type: :string },
-          stutus: { type: :string, enum: %w[unpublished published] },
+          status: { type: :string, enum: %w[unpublished published], default: 'unpublished' },
           author_id: { type: :integer },
           article_id: { type: :integer }
         },
@@ -91,7 +97,7 @@ RSpec.describe 'api/v1/comments', type: :request do
         type: :object,
         properties: {
           body: { type: :string },
-          stutus: { type: :string, enum: %w[unpublished published] },
+          status: { type: :string, enum: %w[unpublished published], default: 'unpublished' },
           author_id: { type: :integer },
           article_id: { type: :integer }
         },
@@ -118,7 +124,7 @@ RSpec.describe 'api/v1/comments', type: :request do
         type: :object,
         properties: {
           body: { type: :string },
-          stutus: { type: :string },
+          status: { type: :string, enum: %w[unpublished published], default: 'unpublished' },
           author_id: { type: :integer },
           article_id: { type: :integer }
         },
