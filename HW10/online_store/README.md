@@ -1,24 +1,38 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Info
+* Ruby version 3.1.3
+* Ruby on Rails 7.0.4
 
-Things you may want to cover:
+#
+* создано app online_store по адресу http://127.0.0.1:3000
 
-* Ruby version
+#для начала нужно сделать такие действия:
 
-* System dependencies
+```ruby
+rails db:create
+rails db:migrate
+rails db:seed
+rails s
+```
+регистрацыя пользывателя.
 
-* Configuration
+```ruby
+http://127.0.0.1:3000/users/sign_in
+```
 
-* Database creation
+```ruby
+email_default: user@ukr.com
+password_default: password
+```
 
-* Database initialization
+вход админа.
 
-* How to run the test suite
+```ruby
+http://127.0.0.1:3000/admin
+```
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```ruby
+email_default: admin@ukr.com
+password_default: password
+```

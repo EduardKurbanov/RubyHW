@@ -1,0 +1,57 @@
+<nav class="py-2 bg-light border-bottom">
+  <div class="container d-flex flex-wrap">
+    <ul class="nav me-auto">
+      <li class="nav-item"><span class="nav-link link-dark px-2 active" aria-current="page"><%= link_to "Home", home_path%></span></li>
+      <li class="nav-item"><span class="nav-link link-dark px-2"><%= link_to "FAQs", faqs_path%></span></li>
+      <li class="nav-item"><span class="nav-link link-dark px-2"><%= link_to "About", about_path%></span></li>
+    </ul>
+    <ul class="nav">
+      <% if user_signed_in? %>
+        <li class="nav-item"><span class="nav-link link-dark px-2">
+          <%= link_to "log out", destroy_user_session_path, method: :delete, class: "link-dark" %>
+        </span></li>
+        <span class="btn btn-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbarLight" aria-controls="offcanvasNavbarLight" >
+          menu
+        </span>
+      <%else%>
+        <li class="nav-item"><span class="nav-link link-dark px-2">
+          <%= link_to "log in", new_user_session_path, class: "link-dark" %>
+        </span></li>
+        <li class="nav-item"><span class="nav-link link-dark px-2">
+          <%= link_to "Registration", new_user_registration_path, class: "link-dark" %>
+        </span></li>
+      <%end%>
+    </ul>
+
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbarLight" aria-labelledby="offcanvasNavbarLightLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavbarLightLabel">menu</h5>
+        <span type="button" class="btn-close " data-bs-dismiss="offcanvas" aria-label="Close"></span>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+          <li class="nav-item">
+            <span class="nav-link active" aria-current="page"><%= link_to "Home", home_path%></span>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Category
+            </a>
+            <ul class="dropdown-menu">
+              <% Category.all.each do |category| %>
+                <%= link_to category.title, category, class: "dropdown-item" %>
+              <% end %>
+            </ul>
+          </li>
+        </ul>
+        <form class="d-flex mt-3" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
