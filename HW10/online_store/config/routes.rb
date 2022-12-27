@@ -19,4 +19,6 @@ Rails.application.routes.draw do
   get "/faqs", to: redirect("/faqs.html")
 
   root 'products#index', as: "home"
+
+  match '*unmatched', to: 'application#notfound!', via: :all
 end
