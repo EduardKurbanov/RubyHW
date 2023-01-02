@@ -1,10 +1,19 @@
-<div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">название <%= @product.name%></h5>
-    <p class="card-text">описание <%= @product.description%></p>
-  </div>
-  <ul class="list-group list-group-flush">
+
+<div class="card mb-3" style="max-width: 1200px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <%= image_tag image_url(@product.image), width: 200, height: 200 %>
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">название <%= @product.name%></h5>
+        <p class="card-text">описание <%= @product.description%></p>
+        <p class="card-text"><small class="text-muted">test</small></p>
+      </div>
+        <ul class="list-group list-group-flush">
     <li class="list-group-item">цена <%= @product.price%></li>
+    <li class="list-group-item"><%= button_to "add to cart", line_items_path(product_id: @product.id), class: "btn btn-primary"%></li>
   </ul>
+    </div>
+  </div>
 </div>

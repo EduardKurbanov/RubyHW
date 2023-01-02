@@ -22,21 +22,14 @@
         <%= render partial: "layouts/form_home_navbar" %>
     </div>
 
-    <div class="container">
+    <main class="container">
       <div class="row">
-        <div class="col-md-12">
-          <% flash.each do |name, message| %>
-            <div class="alert <%= bootstrap_class_for(name) %>">
-              <button class="close" data-dismiss="alert">&times;</button>
-              <%= message %>
-            </div>
-          <% end %>
-        </div>
+        <%= render partial: "layouts/template/form_flash" %>
       </div>
 
       <%= yield %>
     
-    </div>
+    </main>
 
     <div class="row">
         <%= render partial: "layouts/form_home_footer" %>
