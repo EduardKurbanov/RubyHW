@@ -3,12 +3,13 @@
 <table class='table'>
   <tr>
     <th>#</th>
-    <th>Image</th>
-    <th>Name</th>
-    <th>Quantity</th>
-    <th>Status</th>
-    <th>Price</th>
+    <th>image</th>
+    <th>name</th>
+    <th>quantity</th>
+    <th>status</th>
+    <th>price</th>
   </tr>
+  <% @sum_order = 0 %>
   <% @order.cart.line_items.each_with_index do |line_item, index| %>
     <tr>
       <td><%= index+1 %></td>
@@ -16,7 +17,7 @@
       <td><%= line_item.product.name %></td>
       <td><%= line_item.quantity %></td>
       <td><%= @order.status %></td>
-      <td><%= line_item.product.price %></td>
+      <td><%= line_item.product.price * line_item.quantity %></td>
   </tr>
   
   <tr>
@@ -25,7 +26,16 @@
     <td></td>
     <td></td>
     <td></td>
-    <td><b>total pticy: <%= line_item.price %><b></td>
+    <td><b>total pticy: <%= line_item.price * line_item.quantity %><b></td>
   </tr>
+  <% @sum_order += line_item.price * line_item.quantity %>
   <% end %>
+    <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td><b>full total pticy: <%= @sum_order %><b></td>
+  </tr>
 </table>

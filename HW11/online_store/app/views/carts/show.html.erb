@@ -8,7 +8,7 @@
         <th>name</th>
         <th>quantity</th>
         <th>pricy</th>
-        <th>Remove</th>
+        <th>remove</th>
       </tr>
       <% current_cart.line_items.each do |line_item|%>
         <tr>
@@ -24,7 +24,7 @@
           </th>
 
           <th><%= line_item.price * line_item.quantity %></th>
-          <th><%= link_to "Remove", line_item_path(line_item), method: :delete %></th>
+          <th><%= link_to "remove", line_item_path(line_item), method: :delete %></th>
         </tr>
       <%end%>
       <tr>
