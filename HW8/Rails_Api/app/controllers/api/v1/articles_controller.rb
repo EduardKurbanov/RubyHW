@@ -9,16 +9,17 @@ class Api::V1::ArticlesController < ApplicationController
   # GET /api/v1/articles?search_tag=iot&rails
   def index
     @articles = Article.all
-    @articles = @articles.get_article_all
-    @articles = @articles.status_position_article(params[:status]) if params[:status].present?
-    @articles = Article.search_for_a_phrase_in_an_article(params[:search_ph]) if params[:search_ph].present?
+  #  @articles = @articles.get_article_all
+    @articles = @articles.search_by_status(params[:status]) if params[:status].present?
+  #-  @articles = Article.search_for_a_phrase_in_an_article(params[:search_ph]) if params[:search_ph].present?
+    @articles = Article.search_ph(params[:search]) if params[:search].present?
     @articles = @articles.filter_by_author(params[:author]) if params[:author].present?
-    @articles = @articles.sort_the_list_of_articles_by_title(params[:order]) if params[:order].present?
+  #  @articles = @articles.sort_the_list_of_articles_by_title(params[:order]) if params[:order].present?
     @articles = @articles.search_tag(params[:search_tag]) if params[:search_tag].present?
 
-    @pagy, @articles = pagy(@articles, page: params[:page], items: 15)
+    @pagy, @articles = pagy(@articles, page: params[:page])
 
-    render json: @articles, status: :ok
+    render json: {articles: @articles}, status: :ok
   end
 
   # GET /api/v1/arricles/1?last=1
