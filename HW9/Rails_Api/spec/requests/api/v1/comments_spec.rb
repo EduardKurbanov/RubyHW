@@ -10,7 +10,7 @@ RSpec.describe 'api/v1/comments', type: :request do
     # You'll want to customize the parameter types...
     parameter name: 'id', in: :path, type: :integer, description: 'id'
 
-    get('update_status comment') do
+    patch('update_status comment') do
       tags 'Comments'
       consumes 'application/json'
 
@@ -18,7 +18,7 @@ RSpec.describe 'api/v1/comments', type: :request do
         type: :string,
         enum: ['unpublished', 'published'],
         default: 'unpublished'
-      }, description: 'обновить статус комментария как published или unpublished'
+      }, description: 'update comment status as published or unpublished'
 
       response(200, 'successful') do
         after do |example|
@@ -43,9 +43,9 @@ RSpec.describe 'api/v1/comments', type: :request do
         type: :string,
         enum: ['unpublished', 'published'],
         default: 'unpublished'
-      }, description: 'возвращает комментарии со статусом published или unpublished'
+      }, description: 'returns comments with a status of published or unpublished'
 
-      parameter name: :last, in: :query, type: :integer, description: 'возвращает комментарии последнего лимита с limit: integer.'
+      parameter name: :last, in: :query, type: :integer, description: 'returns the comments of the last limit with limit: integer.'
 
       response(200, 'successful') do
         let(:last) { '4' }
@@ -110,38 +110,6 @@ RSpec.describe 'api/v1/comments', type: :request do
       response(200, 'successful') do
         describe 'PATCH api/v1/comments/{id}' do
           it 'check patch comment' do
-            comment.update(body: 'test body')
-            expect(Comment.find_by(body: 'test body')).to eq(comment)
-          end
-        end
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
-        run_test!
-      end
-    end
-
-    put('update comment') do
-      tags 'Comments'
-      consumes 'application/json'
-      parameter name: :comment, in: :body, schema: {
-        type: :object,
-        properties: {
-          body: { type: :string },
-          status: { type: :string, enum: %w[unpublished published], default: 'unpublished' },
-          author_id: { type: :integer },
-          article_id: { type: :integer }
-        },
-        required: [ 'body', 'status', 'author_id', 'article_id' ]}
-
-      response(200, 'successful') do
-        describe 'PUT api/v1/comments/{id}' do
-          it 'check put comment' do
             comment.update(body: 'test body')
             expect(Comment.find_by(body: 'test body')).to eq(comment)
           end

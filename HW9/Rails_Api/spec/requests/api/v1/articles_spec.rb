@@ -11,7 +11,7 @@ RSpec.describe 'api/v1/articles', type: :request do
     # You'll want to customize the parameter types...
     parameter name: 'id', in: :path, type: :integer, description: 'id'
 
-    get('update_status article') do
+    patch('update_status article') do
       tags 'Articles'
       consumes 'application/json'
 
@@ -19,7 +19,7 @@ RSpec.describe 'api/v1/articles', type: :request do
         type: :string,
         enum: ['unpublished', 'published'],
         default: 'unpublished'
-      }, description: 'обновить статус статьи как published или unpublished'
+      }, description: 'update article status as published or unpublished'
 
       response(200, 'successful') do
         after do |example|
@@ -45,14 +45,14 @@ RSpec.describe 'api/v1/articles', type: :request do
         type: :string,
         enum: ['unpublished', 'published'],
         default: 'unpublished'
-      }, description: 'возвращает статью со статусом published или unpublished'
-      parameter name: :search_ph, in: :query, type: :string, description: 'Поиск статей по фразе в заголовке и теле.'
-      parameter name: :author, in: :query, type: :string, description: 'Поиск статей по автору.'
+      }, description: 'returns an article with a status of published or unpublished'
+      parameter name: :search_ph, in: :query, type: :string, description: 'Search articles by phrase in title and body.'
+      parameter name: :author, in: :query, type: :string, description: 'Search for articles by author.'
       parameter name: :order, in: :query, schema: {
         type: :string,
         enum: ['asc', 'desc'],
-      }, description: 'Сортировать статьи по asc и desc'
-      parameter name: :search_tag, in: :query, type: :string, description: 'Искать статьи по тегам (разделять теги ",").'
+      }, description: 'Sort articles by asc and desc'
+      parameter name: :search_tag, in: :query, type: :string, description: 'Search articles by tags (separate tags with ",").'
 
       response(200, 'successful') do
         let(:status) { 'unpublished' }
@@ -118,10 +118,11 @@ RSpec.describe 'api/v1/articles', type: :request do
 
   path '/api/v1/articles/{id}' do
     # You'll want to customize the parameter types...
-    parameter name: 'id', in: :path, type: :integer, description: 'id'
+    parameter name: 'id', in: :path, type: :integer, description: 'id viewing a specific article'
 
     get('show article') do
       tags 'Articles'
+      consumes 'application/json'
 
       response(200, 'successful') do
         after do |example|
@@ -152,39 +153,6 @@ RSpec.describe 'api/v1/articles', type: :request do
       response(200, 'successful') do
         describe 'PATCH api/v1/articles/{id}' do
           it 'check patch article' do
-            article.update(body: 'test body')
-            expect(Article.find_by(body: 'test body')).to eq(article)
-          end
-        end
-
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
-        end
-        run_test!
-      end
-    end
-
-    put('update article') do
-      tags 'Articles'
-      consumes 'application/json'
-
-      parameter name: :article, in: :body, schema: {
-        type: :object,
-        properties: {
-          title: { type: :string },
-          body: { type: :string },
-          author_id: { type: :integer },
-          status: { type: :string, enum: %w[unpublished published], default: 'unpublished' },
-        },
-        required: [ 'title', 'body', 'author_id', 'status' ]}
-
-      response(200, 'successful') do
-        describe 'PUT api/v1/articles/{id}' do
-          it 'check put article' do
             article.update(body: 'test body')
             expect(Article.find_by(body: 'test body')).to eq(article)
           end

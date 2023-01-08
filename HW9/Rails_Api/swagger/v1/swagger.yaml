@@ -12,7 +12,7 @@ paths:
       required: true
       schema:
         type: integer
-    get:
+    patch:
       summary: update_status article
       tags:
       - Articles
@@ -25,7 +25,7 @@ paths:
           - unpublished
           - published
           default: unpublished
-        description: обновить статус статьи как published или unpublished
+        description: update article status as published or unpublished
       responses:
         '200':
           description: successful
@@ -43,15 +43,15 @@ paths:
           - unpublished
           - published
           default: unpublished
-        description: возвращает статью со статусом published или unpublished
+        description: returns an article with a status of published or unpublished
       - name: search_ph
         in: query
-        description: Поиск статей по фразе в заголовке и теле.
+        description: Search articles by phrase in title and body.
         schema:
           type: string
       - name: author
         in: query
-        description: Поиск статей по автору.
+        description: Search for articles by author.
         schema:
           type: string
       - name: order
@@ -61,10 +61,10 @@ paths:
           enum:
           - asc
           - desc
-        description: Сортировать статьи по asc и desc
+        description: Sort articles by asc and desc
       - name: search_tag
         in: query
-        description: Искать статьи по тегам (разделять теги ",").
+        description: Search articles by tags (separate tags with ",").
         schema:
           type: string
       responses:
@@ -105,7 +105,7 @@ paths:
     parameters:
     - name: id
       in: path
-      description: id
+      description: id viewing a specific article
       required: true
       schema:
         type: integer
@@ -117,37 +117,6 @@ paths:
         '200':
           description: successful
     patch:
-      summary: update article
-      tags:
-      - Articles
-      parameters: []
-      responses:
-        '200':
-          description: successful
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                title:
-                  type: string
-                body:
-                  type: string
-                author_id:
-                  type: integer
-                status:
-                  type: string
-                  enum:
-                  - unpublished
-                  - published
-                  default: unpublished
-              required:
-              - title
-              - body
-              - author_id
-              - status
-    put:
       summary: update article
       tags:
       - Articles
@@ -193,7 +162,7 @@ paths:
       required: true
       schema:
         type: integer
-    get:
+    patch:
       summary: update_status comment
       tags:
       - Comments
@@ -206,7 +175,7 @@ paths:
           - unpublished
           - published
           default: unpublished
-        description: обновить статус комментария как published или unpublished
+        description: update comment status as published or unpublished
       responses:
         '200':
           description: successful
@@ -224,10 +193,10 @@ paths:
           - unpublished
           - published
           default: unpublished
-        description: возвращает комментарии со статусом published или unpublished
+        description: returns comments with a status of published or unpublished
       - name: last
         in: query
-        description: 'возвращает комментарии последнего лимита с limit: integer.'
+        description: 'returns the comments of the last limit with limit: integer.'
         schema:
           type: integer
       responses:
@@ -273,37 +242,6 @@ paths:
       schema:
         type: integer
     patch:
-      summary: update comment
-      tags:
-      - Comments
-      parameters: []
-      responses:
-        '200':
-          description: successful
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                body:
-                  type: string
-                status:
-                  type: string
-                  enum:
-                  - unpublished
-                  - published
-                  default: unpublished
-                author_id:
-                  type: integer
-                article_id:
-                  type: integer
-              required:
-              - body
-              - status
-              - author_id
-              - article_id
-    put:
       summary: update comment
       tags:
       - Comments

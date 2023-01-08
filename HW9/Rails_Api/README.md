@@ -22,6 +22,14 @@ rails s
 http://127.0.0.1:3000/api-docs/index.html
 ```
 
+# Rswag и Rspec
+
+```ruby
+сгенерировал rswag yaml и запустил swagger-тесты `rails rswag`
+откройте swagger api-docs http://localhost:3000/api-docs/index.html
+запустить тест с помощью Rspec `rspec spec/requests/api/v1/*_spec.rb`
+```
+
 # работа с api
 создание ```Author``` спомошю ```POST``` запроса:
 

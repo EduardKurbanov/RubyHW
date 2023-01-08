@@ -10,12 +10,12 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :authors, only: %i[index create destroy]
       resources :articles, only: %i[index show create update destroy] do
-        get :update_status, on: :member
+        patch :update_status, on: :member
         get :tag_add, on: :member
         resources :likes, only: %i[create destroy]
       end
       resources :comments, only: %i[index create update destroy] do
-        get :update_status, on: :member 
+        patch :update_status, on: :member 
         resources :likes, only: %i[create destroy]
       end
       resources :tags, only: %i[index show create update destroy]
