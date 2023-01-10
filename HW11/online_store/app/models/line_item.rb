@@ -3,4 +3,8 @@ class LineItem < ApplicationRecord
   belongs_to :cart
 
   validates :quantity, numericality: { qreater_than_or_equal_to: 1}
+
+  def total_price
+    quantity * product.price
+  end
 end

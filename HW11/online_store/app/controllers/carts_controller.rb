@@ -1,12 +1,7 @@
 class CartsController < ApplicationController
-  def show
-#    @cart = @current_cart
-  end
+  before_action :authenticate_user!
 
-#  def destroy
-#    @cart = @current_cart
-#    @cart.destroy
-#    session[:cart_id] = nil
-#    redirect_to root_path
-#  end
+  def show
+    @line_items = current_cart.line_items
+  end
 end

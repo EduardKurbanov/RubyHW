@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   resources :products
   resources :categories
   #resources :line_items, onli: %i[create]
-  resources :orders, onli: %i[create show]
+  resources :orders, onli: %i[create show index new]
   
   get "/about", to: redirect("/about.html")
   get "/faqs", to: redirect("/faqs.html")
@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   root 'products#index', as: "home"
 
   get "/cart", to: "carts#show", as: "cart"
-
+  patch 'orders/:id/switch', to: 'orders#switch_status', as: 'switch'
   post 'line_items' => 'line_items#create'
   get 'line_items/:id' => "line_items#destroy", as: "line_item"
   get 'line_items/:id/add' => 'line_items#add_quantity', as: 'line_item_add'
