@@ -1,0 +1,56 @@
+<% if current_user %>
+
+  <h2>cart</h2>
+  <% if current_cart.line_items.any? %>
+    <table class="table">
+      <tr>
+        <th>image</th>
+        <th>name</th>
+        <th>quantity</th>
+        <th>price: x1</th>
+        <th>full price</th>
+        <th>remove</th>
+      </tr>
+      <% current_cart.line_items.each do |line_item|%>
+        <tr>
+          <th><%= image_tag image_url(line_item.product.image), width: 100, height: 100 %></th>
+          <th><%= line_item.product.name %></th>
+
+          <th>
+          <%= link_to "reduce", line_item_reduce_path(:id => line_item), method: :post %>
+          
+          <%= line_item.quantity %>
+
+          <%= link_to "add", line_item_add_path(:id => line_item), method: :post %>
+          </th>
+
+          <th><%= number_to_currency(line_item.product.price) %></th>
+          <th><%= number_to_currency(line_item.total_price) %></th>
+          <th><%= link_to "remove", line_item_path(line_item), method: :delete %></th>
+        </tr>
+      <%end%>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><b>total ptice: <%= number_to_currency(current_cart.total_price) %><b></td>
+        <td></td>
+      </tr>
+    </table>
+
+  <%else%>
+    <p>currently no items in the cart</p>
+  <%end%>
+
+<% else %>
+  <h3>Please SignIn or SignUp!</h3>
+<% end %>
+
+<% if cart_total_quantity.zero? %>
+  Cart is empty
+<% else %>
+  <%= link_to 'Checkout', new_order_path, class: 'btn btn-primary' %>
+<% end %>
+
+
