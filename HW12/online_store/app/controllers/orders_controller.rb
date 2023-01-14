@@ -1,12 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
 
-#  def create 
-#   order = current_user.orders.create(cart: current_cart, status: 0)
-#   cookies.delete(:cart_id)
-#   redirect_to order_path(order), notice: 'Order was successfully created'
-#  end 
-
   def create
     @order = Order.create(order_params)
     @order.update(user: current_user, cart: current_cart)
@@ -27,10 +21,10 @@ class OrdersController < ApplicationController
     @order = Order.new
   end
 
-  def switch_status
+  def update
     @order = current_user.orders.find_by(id: params[:id])
-    @order.update(status: :paid)
-    redirect_back fallback_location: cart_path
+    @order.paid!
+    redirect_back fallback_location: home_path, notice: 'success'
   end
 
   def order_params

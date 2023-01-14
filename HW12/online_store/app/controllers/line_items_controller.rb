@@ -1,39 +1,30 @@
 class LineItemsController < ApplicationController  
   before_action :authenticate_user!
-  before_action :set_line_item, only: %i[destroy add_quantity reduce_quantity]
+  before_action :set_line_item, only: %i[destroy update]
 
   def create
-    @line_item = current_cart.line_items.find_by(product_id: params[:product_id])
+    product = Product.find(params[:product_id])
+    @line_item = current_cart.line_items.find_by(product: product)
     if @line_item.present?
       @line_item.update(quantity: @line_item.quantity + 1)
     else
-      @line_item = current_cart.line_items.create(product_id: params[:product_id])
+      @line_item = current_cart.line_items.create(product: product)
     end
     redirect_back fallback_location: home_path
   end
 
   def destroy
     @line_item.destroy
-    redirect_back(fallback_location: home_cart)
+    redirect_back fallback_location: cart_path, notice: 'success'
   end 
 
-  def add_quantity
-    @line_item.quantity += 1
-    @line_item.save
-    redirect_back(fallback_location: home_cart)
-  end
-  
-  def reduce_quantity
-    if @line_item.quantity > 1
-      @line_item.quantity -= 1
-      @line_item.save
-      redirect_back(fallback_location: home_cart)
-    elsif @line_item.quantity <= 1
-      #destroy
-      @line_item.quantity = 1
-      @line_item.save
-      redirect_back(fallback_location: home_cart)
+  def update
+    quantity = params[:action_item] == 'increase' ? @line_item.quantity + 1 : @line_item.quantity - 1
+    @line_item.update(quantity: quantity)
+    if @line_item.quantity <= 1
+      @line_item.update(quantity: @line_item.quantity = 1)
     end
+    redirect_back fallback_location: cart_path
   end
 
   def set_line_item
