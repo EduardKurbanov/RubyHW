@@ -11,6 +11,7 @@ class OrdersController < ApplicationController
 
   def show
     @order = current_user.orders.find(params[:id])
+    @line_items = @order.cart.line_items.includes(:product)
   end
 
   def index
