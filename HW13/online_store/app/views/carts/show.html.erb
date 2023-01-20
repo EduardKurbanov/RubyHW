@@ -16,7 +16,7 @@
       <tbody>
         <%@line_items.each do |line_item|%>
           <tr>
-            <th><%= image_tag image_url(line_item.product.image), width: 100, height: 100 %></th>
+            <th><%= image_tag(line_item.product.image, width: 100, height: 100) %></th>
             <th><%= line_item.product.name %></th>
 
             <th>

@@ -2,9 +2,9 @@
 <% @products.each do |products|%>
   <div class="col mt-3">
     <div class="card" style="width: 18rem;">
-      <%= image_tag image_url(products.image) %>
+      <%= image_tag(products.image) %>
       <div class="card-body">
-        <a href="/products/<%=products.id%>" class="card-link"><%= products.name%></a>
+        <%= link_to products.name, products%>
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">pricy <%= number_to_currency(products.price)%></li>
