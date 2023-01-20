@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   resources :categories, only: %i[show index]
   resources :line_items, only: %i[create destroy update]
   resources :orders, only: %i[create show index new update]
-  
+
   get "/about", to: redirect("/about.html")
   get "/faqs", to: redirect("/faqs.html")
 
@@ -24,5 +24,6 @@ Rails.application.routes.draw do
 
   get "/cart", to: "carts#show", as: "cart"
 
-  match '*unmatched', to: 'application#notfound!', via: :all
+  #match '*unmatched', to: 'application#notfound!', via: :all
+  #match "*path", to: "application#notfound!", via: :all
 end
