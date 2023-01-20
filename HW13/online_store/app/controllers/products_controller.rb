@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   
   def index
-    @products = Product.all
+    @products = Product.all.includes(image_attachment: :blob)
   end
 
   def show
