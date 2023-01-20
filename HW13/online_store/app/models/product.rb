@@ -15,7 +15,7 @@ class Product < ApplicationRecord
   belongs_to :category
   has_many :line_items, dependent: :nullify
   
-  has_one_attached :image
+  has_one_attached :image, dependent: :destroy
 
   validates :name, :description, :price, presence: true
 end
