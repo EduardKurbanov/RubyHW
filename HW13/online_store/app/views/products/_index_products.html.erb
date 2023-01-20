@@ -1,0 +1,16 @@
+
+<% @products.each do |products|%>
+  <div class="col mt-3">
+    <div class="card" style="width: 18rem;">
+      <%= image_tag image_url(products.image) %>
+      <div class="card-body">
+        <a href="/products/<%=products.id%>" class="card-link"><%= products.name%></a>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">pricy <%= number_to_currency(products.price)%></li>
+        <li class="list-group-item"><%= button_to "add to cart", line_items_path(product_id: products.id), class: "btn btn-primary"%></li>
+      </ul>
+    </div>
+  </div>
+<%end%>
+

@@ -1,0 +1,25 @@
+
+<p></p>
+<h2>Orders</h2>
+<p></p>
+<% @orders.each do |order| %>
+  <div class="card border-primary mb-3" style="max-width: 18rem;">
+    <div class="card-header">Order #<%= order.id %></div>
+    <div class="card-body text-primary">
+      <p class="card-text">Date: <%= l(order.created_at, format: :short) %></p>
+      <p class="card-text">Name: <%= order.name %></p>
+      <p class="card-text">E-mail: <%= order.email %></p>
+      <p class="card-text">Address shiping: <%= order.address %></p>
+      <p class="card-text">status: <span class="badge <%= order.unpaid? ? 'text-bg-secondary' : 'text-bg-success' %>"><%= order.status %></span></p>
+      <div class="d-grid gap-2 col-6 mx-auto">
+        <%= link_to "view order", order, class: "btn btn-warning"%>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+
+
+
+
+
