@@ -1,8 +1,8 @@
 
 <% @products.each do |products|%>
   <div class="col mt-3">
-    <div class="card" style="width: 18rem;">
-      <%= image_tag(products.image) %>
+    <div class="card" style="width: 15rem;">
+      <%= image_tag(products.image, height: 235, width: 235) if products.image.attached? %>
       <div class="card-body">
         <%= link_to products.name, products%>
       </div>
