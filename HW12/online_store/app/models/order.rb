@@ -16,5 +16,7 @@ class Order < ApplicationRecord
   belongs_to :cart
   belongs_to :user
 
+  validates :name, :email, :address, presence: true, length: { minimum: 2 }
+
   enum :status, { unpaid: 0, paid: 1 }, default: :unpaid
 end
