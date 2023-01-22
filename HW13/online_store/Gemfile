@@ -64,7 +64,7 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
 
   #Preview email in the default browser instead of sending it.
-  gem "letter_opener", group: :development
+  #gem "letter_opener", group: :development
 end
 
 group :development do
@@ -82,5 +82,8 @@ group :development do
 
   #The Bullet gem is designed to help you increase your application's performance by reducing the number of queries it makes
   gem 'bullet'
+
+  #Preview email in the default browser instead of sending it.
+  gem "letter_opener", group: :development
 end
 
