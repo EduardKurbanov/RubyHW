@@ -3,7 +3,9 @@
   <div class="row g-0">
     <div class="col-md-4">
     <% if @product.image.attached? %>
-      <%= image_tag(@product.image, height: 200, width: 200)%>
+      <%= image_tag(@product.image.variant(:medium), height: 200, width: 200)%>
+    <%else%>
+      <%= image_tag "zaglushka.png", height: 200, width: 200 %>
     <% end %>
     </div>
     <div class="col-md-8">
