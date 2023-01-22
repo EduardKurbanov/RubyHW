@@ -13,7 +13,7 @@
   </thead>
   <tbody>
     <% @sum_order = 0 %>
-    <% @line_items.each_with_index do |line_item, index| %>
+    <% @line_items.includes(product: :image_attachment).each_with_index do |line_item, index| %>
       <tr>
         <td><%= index+1 %></td>
         <% if line_item.product.image.attached?%>
