@@ -25,6 +25,7 @@ class OrdersController < ApplicationController
   def update
     @order = current_user.orders.find_by(id: params[:id])
     @order.paid!
+    UserMailer.order(current_user, @order).deliver_later
     redirect_back fallback_location: home_path, notice: 'success'
   end
 
