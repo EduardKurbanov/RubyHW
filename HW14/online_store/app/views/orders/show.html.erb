@@ -1,0 +1,57 @@
+<h1>Order # <%= @order.id %><span class="badge <%= @order.unpaid? ? 'text-bg-secondary' : 'text-bg-success' %>"><%= @order.status %></span></h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">image</th>
+      <th scope="col">name</th>
+      <th scope="col">quantity</th>
+      <th scope="col">price: x1</th>
+      <th scope="col">full price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @sum_order = 0 %>
+    <% @line_items.includes(product: :image_attachment).each_with_index do |line_item, index| %>
+      <tr>
+        <td><%= index+1 %></td>
+        <% if line_item.product.image.attached?%>
+          <td><%= image_tag(line_item.product.image.variant(:little), height: 100, width: 100) %> </td>
+        <%else%>
+          <td><%= image_tag "zaglushka.png", height: 100, width: 100 %></td>
+        <%end%>
+        <td><%= line_item.product.name %></td>
+        <td><%= line_item.quantity %></td>
+        <td><%= number_to_currency(line_item.product.price) %></td>
+        <td><%= number_to_currency(line_item.total_price) %></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><b>total ptice: <%= number_to_currency(line_item.total_price) %><b></td>
+      </tr>
+      <% @sum_order += line_item.total_price %>
+    <% end %>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><b>full total ptice: <%= number_to_currency(@sum_order) %><b></td>
+      </tr>
+  </tbody>
+</table>
+
+<% if @order.unpaid? %>
+  <%= button_to order_path, method: :patch, class: "btn btn-primary" do %>
+    Proceed to payment
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-credit-card-fill" viewBox="0 0 16 16">
+      <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1H0V4zm0 3v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7H0zm3 2h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1z"/>
+    </svg>
+  <% end %>
+<% end %>
