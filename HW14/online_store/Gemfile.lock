@@ -98,6 +98,7 @@ GEM
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11)
     concurrent-ruby (1.1.10)
+    connection_pool (2.3.0)
     crass (1.0.6)
     date (3.3.3)
     debug (1.7.1)
@@ -110,11 +111,17 @@ GEM
       responders
       warden (~> 1.2.3)
     erubi (1.12.0)
+    et-orbi (1.2.7)
+      tzinfo
     execjs (2.8.1)
     ffi (1.15.5)
+    ffi (1.15.5-x64-mingw-ucrt)
     formtastic (4.0.0)
       actionpack (>= 5.2.0)
     formtastic_i18n (0.7.0)
+    fugit (1.8.1)
+      et-orbi (~> 1, >= 1.2.7)
+      raabro (~> 1.4)
     globalid (1.0.0)
       activesupport (>= 5.0)
     has_scope (0.8.0)
@@ -183,15 +190,19 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.8)
+    nokogiri (1.13.10-x64-mingw-ucrt)
+      racc (~> 1.4)
     nokogiri (1.13.10-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
     pagy (6.0.0)
     pg (1.4.5)
+    pg (1.4.5-x64-mingw-ucrt)
     popper_js (2.11.6)
     public_suffix (5.0.1)
     puma (5.6.5)
       nio4r (~> 2.0)
+    raabro (1.4.0)
     racc (1.6.2)
     rack (2.2.4)
     rack-test (2.0.2)
@@ -227,6 +238,8 @@ GEM
       activerecord (>= 6.1.5)
       activesupport (>= 6.1.5)
       i18n
+    redis-client (0.12.1)
+      connection_pool
     reline (0.3.2)
       io-console (~> 0.5)
     responders (3.0.1)
@@ -235,6 +248,8 @@ GEM
     ruby-vips (2.1.4)
       ffi (~> 1.12)
     ruby2_keywords (0.0.5)
+    rufus-scheduler (3.8.2)
+      fugit (~> 1.1, >= 1.1.6)
     sassc (2.4.0)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
@@ -243,6 +258,15 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    sidekiq (7.0.3)
+      concurrent-ruby (< 2)
+      connection_pool (>= 2.3.0)
+      rack (>= 2.2.4)
+      redis-client (>= 0.11.0)
+    sidekiq-scheduler (5.0.0)
+      rufus-scheduler (~> 3.2)
+      sidekiq (>= 4, < 8)
+      tilt (>= 1.4.0)
     sprockets (4.2.0)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -261,6 +285,8 @@ GEM
       railties (>= 6.0.0)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
+    tzinfo-data (1.2022.7)
+      tzinfo (>= 1.0.0)
     uniform_notifier (1.16.0)
     warden (1.2.9)
       rack (>= 2.0.9)
@@ -275,6 +301,7 @@ GEM
     zeitwerk (2.6.6)
 
 PLATFORMS
+  x64-mingw-ucrt
   x86_64-linux
 
 DEPENDENCIES
@@ -294,6 +321,8 @@ DEPENDENCIES
   puma (~> 5.0)
   rails (~> 7.0.4)
   sassc-rails
+  sidekiq
+  sidekiq-scheduler
   sprockets-rails
   stimulus-rails
   turbo-rails
@@ -304,4 +333,4 @@ RUBY VERSION
    ruby 3.1.3p185
 
 BUNDLED WITH
-   2.3.26
+   2.3.25

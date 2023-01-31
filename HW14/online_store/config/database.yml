@@ -23,6 +23,7 @@ default: &default
   username: rordb
   password: ror2022
 
+
 development:
   <<: *default
   database: online_store_development
