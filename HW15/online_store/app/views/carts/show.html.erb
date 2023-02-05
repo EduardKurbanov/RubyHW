@@ -1,0 +1,60 @@
+<% if current_user %>
+
+  <h2>cart</h2>
+  <% if @line_items.any? %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">image</th>
+          <th scope="col">name</th>
+          <th scope="col">quantity</th>
+          <th scope="col">price: x1</th>
+          <th scope="col">full price</th>
+          <th scope="col">remove</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%@line_items.includes(product: :image_attachment).each do |line_item|%>
+          <tr>
+            <%if line_item.product.image.attached?%>
+              <th><%= image_tag(line_item.product.image.variant(:little), width: 100, height: 100) %></th>
+            <%else%>
+              <th><%= image_tag "zaglushka.png", width: 100, height: 100 %></th>
+            <%end%>
+            <th><%= line_item.product.name %></th>
+
+            <th>
+            <div class="d-flex">
+              <%= button_to "-", line_item_path(line_item), params: { action_item: 'decrease' }, method: :patch %>
+
+              <%= line_item.quantity %>
+
+              <%= button_to "+", line_item_path(line_item), params: { action_item: 'increase' }, method: :patch %>
+              </th>
+            </div>
+
+            <th><%= number_to_currency(line_item.product.price) %></th>
+            <th><%= number_to_currency(line_item.total_price) %></th>
+            <th><%= button_to "remove", line_item_path(line_item), method: :delete %></th>
+          </tr>
+        <%end%>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td><b>total ptice: <%= number_to_currency(current_cart.total_price) %><b></td>
+              <td></td>
+            </tr>
+      </tbody>
+    </table>
+    <%= link_to 'Checkout', new_order_path, class: 'btn btn-primary' %>
+  <%else%>
+    <p>currently no items in the cart</p>
+  <%end%>
+
+<% else %>
+  <h3>Please SignIn or SignUp!</h3>
+<% end %>
+
+

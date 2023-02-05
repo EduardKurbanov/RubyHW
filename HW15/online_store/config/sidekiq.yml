@@ -1,0 +1,7 @@
+:scheduler:
+  :schedule:
+    lottery_winner_user:
+      cron: '0 8 1 * * Europe/Kiev'   # Runs once per minute
+      class: LotteryWinnerUserScheduler
+      queue: "default"
+      description: "launch a service to select two winners"
