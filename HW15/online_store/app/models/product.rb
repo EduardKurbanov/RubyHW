@@ -22,4 +22,6 @@ class Product < ApplicationRecord
   end
 
   validates :name, :description, :price, presence: true
+
+  broadcasts_to ->(product) { 'products' }, inserts_by: :prepend
 end
