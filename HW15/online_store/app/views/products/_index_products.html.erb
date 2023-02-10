@@ -13,6 +13,7 @@
       <ul class="list-group list-group-flush">
         <li class="list-group-item">pricy <%= number_to_currency(products.price)%></li>
         <li class="list-group-item"><%= button_to "add to cart", line_items_path(product_id: products.id), class: "btn btn-primary"%></li>
+        <li class="list-group-item"><%= button_to (current_product_quantity(products.id).present?) ? "In cart" : "Add to cart", line_items_path(product_id: products.id), class: "btn btn-primary add-to-cart" %></li>
       </ul>
     </div>
   </div>
