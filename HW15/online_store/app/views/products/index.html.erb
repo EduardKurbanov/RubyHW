@@ -4,7 +4,7 @@
   <h2 class="text-center">all products</h2>
 </div>
 
-<div class="row">
+<div id="products" class="row products">
   <% @products.each do |product|%>
     <%= render partial: "products/index_products", locals: { product: product } %>
   <%end%>

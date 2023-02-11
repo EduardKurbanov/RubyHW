@@ -8,7 +8,7 @@ ActiveAdmin.register Product do
   permit_params :name, :description, :price, :image, :category_id
 
   includes :category
-  #includes :image_attachment
+  includes :image_attachment
 
   form do |f|
     f.inputs do

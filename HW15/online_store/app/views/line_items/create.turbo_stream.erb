@@ -2,3 +2,6 @@
     <%= cart_total_quantity %>
 <% end %>
 
+<%= turbo_stream.update "product_#{@line_item.product.id}" do %>
+    <%= render 'products/button', product: @line_item.product, line_item: @line_item  %>
+<% end %>

@@ -23,9 +23,7 @@ class Product < ApplicationRecord
 
   validates :name, :description, :price, presence: true
 
-#  broadcasts_to ->(product) { 'products' }, inserts_by: :prepend
-
-  after_create_commit -> { broadcast_prepend_to 'products' }
-  after_update_commit -> { broadcast_replace_to 'products' }
+  after_create_commit -> { broadcast_prepend_to 'products', partial: 'products/index_products' }
+  after_update_commit -> { broadcast_replace_to 'products', partial: 'products/index_products' }
   after_destroy_commit -> { broadcast_remove_to 'products' }
 end
