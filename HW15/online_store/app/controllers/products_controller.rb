@@ -28,6 +28,7 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_back fallback_location: products_path }
+      format.turbo_stream
     end
   end
 end

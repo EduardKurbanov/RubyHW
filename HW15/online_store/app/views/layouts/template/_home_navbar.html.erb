@@ -9,7 +9,9 @@
       <% if user_signed_in? %>
         <li class="nav-item"><span class="nav-link link-dark px-2">
           <%= link_to "Cart", cart_path, class: "link-dark" %>
-          <span class="total"><%= cart_total_quantity %></span>
+          <%= turbo_frame_tag "total_products" do %>
+            <%= cart_total_quantity %>
+          <% end %>
         </span></li>
         <li class="nav-item"><span class="nav-link link-dark px-2">
           <%= link_to "log out", destroy_user_session_path, method: :delete, class: "link-dark" %>

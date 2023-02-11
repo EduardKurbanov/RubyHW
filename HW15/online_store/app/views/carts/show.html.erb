@@ -26,11 +26,11 @@
 
             <th>
             <div class="d-flex">
-              <%= button_to "-", line_item_path(line_item), params: { action_item: 'decrease' }, method: :patch %>
+              <%= button_to "-", line_item_path(line_item), params: { action_item: 'decrease' }, method: :patch, data: { turbo: false } %>
 
               <%= line_item.quantity %>
 
-              <%= button_to "+", line_item_path(line_item), params: { action_item: 'increase' }, method: :patch %>
+              <%= button_to "+", line_item_path(line_item), params: { action_item: 'increase' }, method: :patch, data: { turbo: false } %>
               </th>
             </div>
 
