@@ -32,6 +32,9 @@ module OnlineStore
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Don't generate system test files.
+
+    config.active_storage.variant_processor = :mini_magick
+    config.public_file_server.enabled = true
     config.generators.system_tests = nil
   end
 end
