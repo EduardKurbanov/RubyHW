@@ -1,7 +1,11 @@
+<%= turbo_stream_from 'products' %>
+
 <div class="row">
   <%= render partial: "layouts/template/breadcrumb", locals: { breadcrumb: @category } %>
 </div>
 
-<div class="row">
-  <%= render partial: "products/index_products" %>
+<div id="products" class="row products">
+  <% @products.each do |product|%>
+    <%= render partial: "products/index_products", locals: { product: product } %>
+  <%end%>
 </div>

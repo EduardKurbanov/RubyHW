@@ -6,7 +6,7 @@ class OrdersController < ApplicationController
     @order.update(user: current_user, cart: current_cart)
     @order.save
     cookies.delete(:cart_id)
-    redirect_to orders_path(@order)
+    redirect_to orders_path(@order), notice: 'Order was successfully created'
   end
 
   def show
